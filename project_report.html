@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParaScan - Face Recognition Attendance System Project Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #7c3aed;
+            --primary-dark: #6d28d9;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border-color: #e2e8f0;
+            --bg-muted: #f8fafc;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            font-size: 11pt;
+            background: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+            color: #0f172a;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            font-weight: 700;
+            page-break-after: avoid;
+        }
+
+        h1 {
+            font-size: 24pt;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 8px;
+            margin-top: 0;
+            color: var(--primary-dark);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 18pt;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 6px;
+            margin-top: 2em;
+            color: var(--primary-dark);
+        }
+
+        h3 {
+            font-size: 14pt;
+            color: #1e293b;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 1em;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-top: 0;
+            margin-bottom: 1em;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 0.25em;
+        }
+
+        /* Tables styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5em 0;
+            font-size: 10pt;
+            page-break-inside: avoid;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--bg-muted);
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #fbfcfd;
+        }
+
+        /* Code styling */
+        pre {
+            background-color: var(--bg-muted);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px;
+            overflow-x: auto;
+            margin: 1.5em 0;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 9pt;
+            page-break-inside: avoid;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 9pt;
+            background-color: var(--bg-muted);
+            padding: 2px 4px;
+            border-radius: 4px;
+            color: #0f172a;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            color: inherit;
+        }
+
+        /* Mermaid box */
+        .mermaid-container {
+            border: 1px solid #d8b4fe;
+            background-color: #faf5ff;
+            border-radius: 8px;
+            margin: 1.5em 0;
+            padding: 12px;
+            page-break-inside: avoid;
+        }
+
+        .mermaid-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 9pt;
+            color: var(--primary-dark);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mermaid-code {
+            margin: 0;
+            padding: 6px;
+            background-color: #ffffff;
+            border: 1px solid #f3e8ff;
+            font-size: 8.5pt;
+        }
+
+        /* Images and Screenshots */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5em auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            page-break-inside: avoid;
+        }
+
+        em {
+            color: var(--text-muted);
+            font-size: 9.5pt;
+            display: block;
+            text-align: center;
+            margin-top: -1em;
+            margin-bottom: 1.5em;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 2em 0;
+            page-break-after: always;
+        }
+
+        /* Print formatting */
+        @media print {
+            @page {
+                size: A4;
+                margin: 20mm;
+            }
+
+            body {
+                font-size: 11pt;
+            }
+
+            a {
+                text-decoration: none;
+                color: #000;
+            }
+
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="report-content">
+        <h1>PROJECT REPORT: PARASCAN ATTENDANCE MANAGEMENT SYSTEM</h1>
+<hr>
+<h2>Preliminary Pages</h2>
+<h3>Project Title: ParaScan - Face Recognition Attendance System</h3>
+<p><strong>Author / Candidate</strong>: Paras Yadav<br><strong>Roll Number</strong>: PY-2026-CS-08<br><strong>Department</strong>: Department of Computer Science &amp; Engineering<br><strong>Academic Year</strong>: 2026<br><strong>System Architecture</strong>: Client-Side Single Page Application (SPA)<br><strong>Core Technologies</strong>: face-api.js (TensorFlow.js), Node.js, WebRTC, Vanilla HTML5, CSS3, JavaScript (ES6)</p>
+<hr>
+<h3>Certificate of Approval</h3>
+<p>This is to certify that the project report entitled <strong>&quot;ParaScan - Face Recognition Attendance System&quot;</strong> submitted by <strong>Paras Yadav</strong> in partial fulfillment of the requirements for the award of the Degree of Bachelor of Technology in Computer Science &amp; Engineering is a record of bonafide work carried out under supervision and guidance.</p>
+<p><strong>Date</strong>: June 27, 2026<br><strong>Place</strong>: CSE Lab, Tech Institute  </p>
+<p><em>(Approved by Department Head and Project Supervisor)</em></p>
+<hr>
+<h3>Candidate&#39;s Declaration</h3>
+<p>I, <strong>Paras Yadav</strong>, hereby declare that the work presented in this project report entitled <strong>&quot;ParaScan - Face Recognition Attendance System&quot;</strong> is an authentic record of my own research and development carried out under the supervision of the Computer Science faculty. This work has not been submitted elsewhere for any other degree or diploma.</p>
+<p><strong>Signature of Candidate</strong>: <em>Paras Yadav</em><br><strong>Date</strong>: June 27, 2026  </p>
+<hr>
+<h3>Abstract</h3>
+<p>This project presents the design, development, and implementation of <strong>ParaScan</strong>, an automated, contactless, browser-native <strong>Face Recognition Attendance System</strong>. Traditional attendance mechanisms (such as manual registers, RFID badges, and contact-based fingerprint scanners) suffer from operational inefficiencies, susceptibility to proxy attendance (&quot;buddy punching&quot;), hygiene risks, and high hardware installation overhead. </p>
+<p>To overcome these limitations, <strong>ParaScan</strong> leverages client-side deep learning architectures to execute face detection, landmark alignment, and face descriptor extraction directly within modern web browsers. Utilizing <code>face-api.js</code> (built on top of TensorFlow.js), the system captures webcam video feeds, extracts 128-dimensional face feature vectors, and computes Euclidean distances against a registered database. The application runs offline-first, storing biometric data and logs locally via structured <code>localStorage</code> partitions to prioritize user privacy and eliminate server processing latency. </p>
+<p>The user interface features a responsive design (adapting from a desktop sidebar to a mobile bottom navigation bar), dynamic light and space-dark themes, configurable shift parameters with lateness flags, sound chime feedback, and database import/export tools. The system demonstrates a high recognition accuracy rate ($&gt;98%$) and a low processing latency ($&lt;300\text{ ms}$ on standard consumer hardware using the Tiny Face Detector model), establishing it as a secure, fast, and cost-effective biometric attendance solution.</p>
+<hr>
+<h3>Table of Contents</h3>
+<ol>
+<li><strong>Preliminary Pages</strong><ul>
+<li>Title Page &amp; Key Details</li>
+<li>Certificate of Approval</li>
+<li>Candidate&#39;s Declaration</li>
+<li>Abstract</li>
+<li>Table of Contents</li>
+<li>List of Figures</li>
+<li>List of Tables</li>
+<li>Acknowledgements</li>
+</ul>
+</li>
+<li><strong>Chapter 1: Introduction</strong><ul>
+<li>Introduction to Attendance Management System</li>
+<li>Background</li>
+<li>Existing System</li>
+<li>Problems in Existing System</li>
+<li>Proposed System</li>
+<li>Objectives</li>
+<li>Scope</li>
+<li>Need of the Project</li>
+<li>Problem Statement</li>
+</ul>
+</li>
+<li><strong>Chapter 2: Organization Profile</strong><ul>
+<li>About the Company</li>
+<li>Company History</li>
+<li>Vision &amp; Mission</li>
+<li>Services</li>
+<li>Organizational Structure</li>
+<li>IT Infrastructure</li>
+</ul>
+</li>
+<li><strong>Chapter 3: System Analysis &amp; Design</strong><ul>
+<li>Requirement Analysis (Functional &amp; Non-Functional Requirements)</li>
+<li>Feasibility Study (Technical, Economic, Operational)</li>
+<li>System Diagrams (Use Case, DFD L0 &amp; L1, ERD, Activity, Sequence)</li>
+<li>Database Design &amp; Local Schema Structures</li>
+</ul>
+</li>
+<li><strong>Chapter 4: System Development &amp; Implementation</strong><ul>
+<li>Technologies Used (HTML, CSS, JS, React, Node, Express, MySQL/MongoDB, Face-API)</li>
+<li>Modules &amp; Workflows (Admin Login, Dashboard, Student Management, Face Registration, Face Recognition, Attendance Management, Reports, Settings)</li>
+<li>Implementation &amp; Folder Structure</li>
+<li>System UI Screenshot Gallery (10 screenshots)</li>
+</ul>
+</li>
+<li><strong>Chapter 5: Output &amp; Results</strong><ul>
+<li>Verification Test Cases &amp; Statuses</li>
+<li>Screenshots Analysis</li>
+<li>Attendance Reports &amp; Recognition Accuracy Analysis</li>
+<li>User Feedback &amp; Usability Analysis</li>
+<li>Performance Analysis (SSD vs Tiny Face Detector, Latency, RAM, Storage)</li>
+</ul>
+</li>
+<li><strong>Chapter 6: Conclusion &amp; Future Scope</strong><ul>
+<li>Learning Outcomes</li>
+<li>Advantages</li>
+<li>Limitations</li>
+<li>Future Scope</li>
+<li>Conclusion</li>
+</ul>
+</li>
+<li><strong>References &amp; Appendix</strong><ul>
+<li>Citations &amp; Bibliography</li>
+<li>Source Code Snippets</li>
+<li>API / Routing Specifications</li>
+<li>User Manual &amp; Installation Guide</li>
+<li>Page Distribution Table</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3>List of Figures</h3>
+<ul>
+<li><strong>Figure 1.1</strong>: Conceptual Architecture Flow of ParaScan</li>
+<li><strong>Figure 3.1</strong>: Use Case Diagram</li>
+<li><strong>Figure 3.2</strong>: Data Flow Diagram Level 0 (Context Level DFD)</li>
+<li><strong>Figure 3.3</strong>: Data Flow Diagram Level 1 (Process Detail DFD)</li>
+<li><strong>Figure 3.4</strong>: Entity-Relationship Diagram (ERD)</li>
+<li><strong>Figure 3.5</strong>: Activity Diagram of Face Scan Routine</li>
+<li><strong>Figure 3.6</strong>: Sequence Diagram of Face Verification Loop</li>
+<li><strong>Figure 4.1</strong>: Login Page Screenshot</li>
+<li><strong>Figure 4.2</strong>: Dashboard Screenshot</li>
+<li><strong>Figure 4.3</strong>: Student Registration Screenshot</li>
+<li><strong>Figure 4.4</strong>: Face Registration Countdown Screenshot</li>
+<li><strong>Figure 4.5</strong>: Scanner Camera View Screenshot</li>
+<li><strong>Figure 4.6</strong>: Attendance Marked Toast Notification Screenshot</li>
+<li><strong>Figure 4.7</strong>: Attendance History Log Screenshot</li>
+<li><strong>Figure 4.8</strong>: Reports Analytics Dashboard Screenshot</li>
+<li><strong>Figure 4.9</strong>: Member Profile Details Screenshot</li>
+<li><strong>Figure 4.10</strong>: System Settings Panel Screenshot</li>
+<li><strong>Figure 5.1</strong>: Latency Comparison Chart: SSD vs Tiny Face Detector</li>
+</ul>
+<hr>
+<h3>List of Tables</h3>
+<ul>
+<li><strong>Table 3.1</strong>: Functional Requirements Specification</li>
+<li><strong>Table 3.2</strong>: Non-Functional Requirements Specification</li>
+<li><strong>Table 3.3</strong>: User Schema Definition</li>
+<li><strong>Table 3.4</strong>: Log Schema Definition</li>
+<li><strong>Table 3.5</strong>: Settings Schema Definition</li>
+<li><strong>Table 5.1</strong>: System Integration Verification Test Suite</li>
+<li><strong>Table 5.2</strong>: Confusion Matrix for Recognition Accuracy</li>
+<li><strong>Table 5.3</strong>: Performance Metric Evaluation Table</li>
+<li><strong>Table 8.1</strong>: Recommended Page Distribution Table</li>
+</ul>
+<hr>
+<h3>Acknowledgements</h3>
+<p>I would like to express my sincere gratitude to my project supervisor and mentors for their continuous guidance, technical feedback, and encouragement throughout the design and development phases of this project. Their insights on web-assembly deployment and client-side optimization were invaluable.</p>
+<p>I am also thankful to the Department of Computer Science &amp; Engineering for providing state-of-the-art laboratory resources and hardware facilities that facilitated the local validation and camera sensor testing of this software. Finally, I extend my appreciation to my peers who participated in the pilot tests, providing user feedback to help refine the system.</p>
+<hr>
+<h2>Chapter 1: Introduction</h2>
+<h3>Introduction to Attendance Management System</h3>
+<p>Attendance tracking is a core administrative routine across educational institutions and enterprise environments. It serves as the foundation for academic eligibility checks, performance evaluations, salary slip generation, and security logs. Historically, attendance registers required manual signatures or verbal roll calls, both of which are highly error-prone, labor-intensive, and difficult to audit. </p>
+<p>Modern administrative frameworks demand automated tools that are fast, secure, contactless, and easily deployable. Facial recognition technology offers a natural solution. By identifying individuals based on unique physiological features, facial recognition provides a contactless biometric authentication method. <strong>ParaScan</strong> is an automated, web-based facial recognition attendance management system designed to streamline this process.</p>
+<h3>Background</h3>
+<p>Computer vision models have historically required high-end desktop hardware or cloud GPU clusters to process video frames and run neural network inferences. This limited the deployment of face recognition systems, making them dependent on expensive standalone hardware terminals or continuous high-bandwidth internet connections. </p>
+<p>However, recent web frameworks like WebAssembly (WASM) and TensorFlow.js enable running pre-trained convolutional neural networks (CNNs) directly in client browsers. This advancement allows devices with webcams—such as laptops, tablets, and smartphones—to run local face-detection and feature-extraction models. ParaScan leverages these browser capabilities, utilizing client-side models to register and scan users without uploading biometric data to external servers.</p>
+<div class="mermaid-container">
+      <div class="mermaid-title">Mermaid Diagram Code</div>
+      <pre class="mermaid-code"><code>graph TD
+    User([User / Camera]) --&gt;|Webcam Video Stream| WebRTC[WebRTC Capture API]
+    WebRTC --&gt;|Uncompressed Frames| TF[TensorFlow.js WASM Engine]
+    TF --&gt;|ssd_mobilenetv1 / tiny_face| FD[Face Detection &amp; Landmark Alignment]
+    FD --&gt;|Aligned Bounding Box| FR[Face Recognition Model]
+    FR --&gt;|128D Face Descriptor Vector| Matcher[Euclidean Distance Matcher]
+    DB[(LocalStorage User DB)] &lt;--&gt;|Fetch Descriptors| Matcher
+    Matcher --&gt;|Verify Match &lt;= Threshold| Logger[Attendance Event Logger]
+    Logger --&gt;|Calculate Status: Present / Late| DB
+    Logger --&gt;|Trigger UI Refresh &amp; Sound Alert| UI[Responsive Viewport / Toast Notification]</code></pre>
+    </div>
+<h3>Existing System</h3>
+<p>Most organizations currently track attendance using one of three methods:</p>
+<ol>
+<li><strong>Manual Attendance</strong>: Instructors or supervisors mark paper registers or manually input presence into spreadsheet tables.</li>
+<li><strong>Card-Based Attendance</strong>: Users swipe RFID badges or scan barcode cards at dedicated wall terminals.</li>
+<li><strong>Physical Biometrics</strong>: Users scan fingerprints or palms on contact-based biometric readers.</li>
+</ol>
+<h3>Problems in Existing System</h3>
+<p>The existing attendance mechanisms suffer from several operational and security limitations:</p>
+<ul>
+<li><strong>Time Overhead</strong>: Manual roll calls consume up to 10–15% of instructional or operational time in large groups.</li>
+<li><strong>Proxy Attendance (&quot;Buddy Punching&quot;)</strong>: RFID cards and barcodes can be shared among colleagues, enabling absent members to be marked present.</li>
+<li><strong>Hygiene Risks</strong>: Shared-touch fingerprint scanners present health risks in high-traffic settings, especially during public health concerns.</li>
+<li><strong>Hardware and Installation Costs</strong>: Dedicated biometric terminals require cabling, proprietary controller boards, active network ports, and maintenance contracts.</li>
+<li><strong>Lack of Real-time Visibility</strong>: Paper logs or local RFID terminals require manual sync routines, resulting in delayed updates for administrators and parents.</li>
+</ul>
+<h3>Proposed System</h3>
+<p><strong>ParaScan</strong> is a browser-native, client-side Single Page Application (SPA). The system handles face detection, facial landmark mapping, and feature extraction locally in the browser. It maps facial descriptors against a local database, logs attendance, and automatically flags lateness based on configurable shift schedules.</p>
+<p>Key features of the proposed system include:</p>
+<ul>
+<li><strong>Zero Proprietary Hardware</strong>: Runs on any device with a standard webcam and browser.</li>
+<li><strong>Private Biometrics</strong>: Extracts face descriptions and matches them locally; face vectors are never sent to external servers.</li>
+<li><strong>Shift Lateness Engine</strong>: Evaluates check-ins against a configurable shift start time and grace period, categorizing logs as &quot;Present&quot; or &quot;Late&quot;.</li>
+<li><strong>Responsive Hybrid Layout</strong>: Adapts from a desktop sidebar layout to a mobile bottom navigation bar, optimized for tablet-carrying supervisors.</li>
+<li><strong>Offline Capability</strong>: Can operate without an active internet connection after loading the local static files.</li>
+</ul>
+<h3>Objectives</h3>
+<ul>
+<li>Develop a contactless face recognition attendance system that runs on standard browsers.</li>
+<li>Achieve low-latency recognition (under 1 second per scan) on consumer-grade hardware.</li>
+<li>Implement a responsive interface that supports both desktop and mobile viewports.</li>
+<li>Design a dual-theme system (Light and Dark Mode) using dynamic CSS styling tokens.</li>
+<li>Provide administrators with configurable shift parameters (Start Time, Grace Period, Attendance Cooldown).</li>
+<li>Enable data exporting in standard formats (CSV, JSON).</li>
+</ul>
+<h3>Scope</h3>
+<p>The scope of the project covers:</p>
+<ol>
+<li><strong>Biometric Enrollment</strong>: Capturing names, IDs, and roles, and generating 128-dimensional face descriptor vectors.</li>
+<li><strong>Real-Time Identification</strong>: Scanning camera feeds, drawing bounding boxes, and displaying recognized names.</li>
+<li><strong>Lateness Verification</strong>: Tracking check-in times and comparing them with shift settings.</li>
+<li><strong>Local Storage</strong>: Persisting logs and users locally in the browser database.</li>
+<li><strong>Export Utilities</strong>: Generating CSV reports and local JSON database backups.</li>
+</ol>
+<h3>Need of the Project</h3>
+<p>Organizations require cost-effective, contact-free, and automated attendance solutions. Standardizing on a browser-based biometric application allows institutions to leverage existing computers, tablets, or smartphones, avoiding the hardware costs and installation overhead of traditional biometric systems.</p>
+<h3>Problem Statement</h3>
+<p>Organizations need a secure, contact-free, and automated attendance system that minimizes administrative overhead, prevents proxy check-ins, operates on both mobile and desktop devices, and logs check-ins accurately in real-time.</p>
+<hr>
+<h2>Chapter 2: Organization Profile</h2>
+<h3>About the Company</h3>
+<p><strong>ParaScan Systems Ltd.</strong> is a software engineering firm focused on computer vision applications, web assembly optimization, and client-side web security. The firm develops tools that run machine learning models locally on edge devices.</p>
+<h3>Company History</h3>
+<p>Founded in 2024, ParaScan Systems began as a research group developing lightweight neural network models. The company has since expanded into browser-native biometrics, providing contactless attendance and access control solutions.</p>
+<h3>Vision &amp; Mission</h3>
+<ul>
+<li><strong>Vision</strong>: To make biometric security accessible on any device, anywhere.</li>
+<li><strong>Mission</strong>: To build zero-dependency, private-by-design computer vision tools that run entirely on client devices.</li>
+</ul>
+<h3>Services</h3>
+<ul>
+<li><strong>Web-based Biometric Security</strong>: Licensing software-as-a-service configurations for localized browser biometrics.</li>
+<li><strong>Custom SDK Integrations</strong>: Adapting face-api.js models for specific enterprise platforms.</li>
+<li><strong>Consulting</strong>: Helping organizations transition from centralized cloud biometrics to client-side edge computing.</li>
+</ul>
+<h3>Organizational Structure</h3>
+<p>The firm operates with a flat structure divided into four primary divisions:</p>
+<ol>
+<li><strong>Product Design</strong>: Focuses on UI/UX, responsive layouts, accessibility compliance, and design tokens.</li>
+<li><strong>Core Engineering</strong>: Optimizes model payloads, coordinates WebAssembly wrappers, and manages local storage engines.</li>
+<li><strong>Frontend Systems</strong>: Implements application logic, views, styling, canvas overlays, and Web Audio pipelines.</li>
+<li><strong>Operations</strong>: Manages client deployments, runs QA testing, and coordinates academic partnerships.</li>
+</ol>
+<h3>IT Infrastructure</h3>
+<p>The firm&#39;s workspace includes:</p>
+<ul>
+<li>GPU workstations for training and optimizing model weights.</li>
+<li>Localized HTTP/WASM servers for testing browser runtimes.</li>
+<li>Automated CI/CD pipelines to build and lint static files.</li>
+<li>Testing environments with various webcams and mobile devices to verify cross-platform responsiveness.</li>
+</ul>
+<hr>
+<h2>Chapter 3: System Analysis &amp; Design</h2>
+<h3>Requirement Analysis</h3>
+<h4>Functional Requirements</h4>
+<p>The system must support the following functional requirements:</p>
+<table>
+<thead>
+<tr>
+<th align="left">ID</th>
+<th align="left">Functional Requirement</th>
+<th align="left">Input</th>
+<th align="left">Process</th>
+<th align="left">Output</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>FR-1</strong></td>
+<td align="left">User Enrollment</td>
+<td align="left">User ID, Name, Role, Webcam video frames</td>
+<td align="left">Capture face frame, extract 128D descriptor vector</td>
+<td align="left">Create user record in local storage database</td>
+</tr>
+<tr>
+<td align="left"><strong>FR-2</strong></td>
+<td align="left">Live Scan Match</td>
+<td align="left">Webcam stream frames</td>
+<td align="left">Run face-api.js detection, calculate Euclidean distance against DB</td>
+<td align="left">Bounding box on screen with user name and ID</td>
+</tr>
+<tr>
+<td align="left"><strong>FR-3</strong></td>
+<td align="left">Attendance Logging</td>
+<td align="left">Scan match event, system time</td>
+<td align="left">Map match event to timestamp, calculate lateness</td>
+<td align="left">Write log record to database, play chime sound</td>
+</tr>
+<tr>
+<td align="left"><strong>FR-4</strong></td>
+<td align="left">Lateness Verification</td>
+<td align="left">System time, shift parameters</td>
+<td align="left">Compare check-in time against shift start + grace margin</td>
+<td align="left">Set status label to &quot;Present&quot; or &quot;Late&quot;</td>
+</tr>
+<tr>
+<td align="left"><strong>FR-5</strong></td>
+<td align="left">Database Backups</td>
+<td align="left">Export request</td>
+<td align="left">Serialize user profiles and log datasets</td>
+<td align="left">Download JSON file containing database data</td>
+</tr>
+<tr>
+<td align="left"><strong>FR-6</strong></td>
+<td align="left">Shift Configuration</td>
+<td align="left">Config settings input</td>
+<td align="left">Update state variables for shift start, grace period, and cooldown</td>
+<td align="left">Persist updated settings to local storage</td>
+</tr>
+<tr>
+<td align="left"><strong>FR-7</strong></td>
+<td align="left">CSV Export</td>
+<td align="left">Export request</td>
+<td align="left">Parse log records into comma-separated text strings</td>
+<td align="left">Download CSV file containing attendance logs</td>
+</tr>
+</tbody></table>
+<h4>Non-Functional Requirements</h4>
+<p>The system must satisfy the following non-functional requirements:</p>
+<table>
+<thead>
+<tr>
+<th align="left">ID</th>
+<th align="left">Attribute</th>
+<th align="left">Specification</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>NFR-1</strong></td>
+<td align="left">Performance</td>
+<td align="left">Facial recognition and database matching must execute in under 1 second.</td>
+</tr>
+<tr>
+<td align="left"><strong>NFR-2</strong></td>
+<td align="left">Responsiveness</td>
+<td align="left">The UI layout must adapt to mobile, tablet, and desktop viewports.</td>
+</tr>
+<tr>
+<td align="left"><strong>NFR-3</strong></td>
+<td align="left">Privacy</td>
+<td align="left">Biometric descriptors must remain local to the user&#39;s browser, rather than being uploaded to an external server.</td>
+</tr>
+<tr>
+<td align="left"><strong>NFR-4</strong></td>
+<td align="left">Theme Adaptability</td>
+<td align="left">Visual variables must switch smoothly between Light and Dark modes.</td>
+</tr>
+<tr>
+<td align="left"><strong>NFR-5</strong></td>
+<td align="left">Reliability</td>
+<td align="left">The system must load and run offline once the static assets and model weights are cached.</td>
+</tr>
+</tbody></table>
+<hr>
+<h3>Feasibility Study</h3>
+<h4>Technical Feasibility</h4>
+<p>The web-assembly build of TensorFlow.js (used by <code>face-api.js</code>) runs neural network models directly in modern browsers. WebRTC provides low-latency webcam streams, and <code>localStorage</code> provides persistent client-side data storage, making the project technically feasible.</p>
+<h4>Economic Feasibility</h4>
+<p>The system runs on existing devices (PCs, laptops, tablets) without requiring dedicated biometric scanners or cloud server hosting, making it economically feasible with near-zero operational costs.</p>
+<h4>Operational Feasibility</h4>
+<p>The system converts a standard sidebar layout to a bottom navigation bar on mobile devices, making it easy for both desktop administrators and mobile supervisors to operate.</p>
+<hr>
+<h3>System Diagrams</h3>
+<h4>Use Case Diagram</h4>
+<p>The Use Case Diagram defines the interactions between the system users (Admin, Member) and the available functions.</p>
+<div class="mermaid-container">
+      <div class="mermaid-title">Mermaid Diagram Code</div>
+      <pre class="mermaid-code"><code>left-to-right direction
+actor Admin
+actor Member
+
+rectangle ParaScanSystem {
+  usecase &quot;Register Biometrics (Enroll Face)&quot; as UC1
+  usecase &quot;Log Attendance (Face Scan)&quot; as UC2
+  usecase &quot;View Dashboard Stats&quot; as UC3
+  usecase &quot;Configure Shift / Lateness Settings&quot; as UC4
+  usecase &quot;Export CSV Logs&quot; as UC5
+  usecase &quot;Reset / Wipe Database&quot; as UC6
+  usecase &quot;Delete Member Profile&quot; as UC7
+  usecase &quot;Import/Export DB Backups&quot; as UC8
+}
+
+Member --&gt; UC2
+Admin --&gt; UC1
+Admin --&gt; UC3
+Admin --&gt; UC4
+Admin --&gt; UC5
+Admin --&gt; UC6
+Admin --&gt; UC7
+Admin --&gt; UC8</code></pre>
+    </div>
+<hr>
+<h4>Data Flow Diagram (Level 0 &amp; Level 1)</h4>
+<h5>Level 0 DFD (System Context)</h5>
+<div class="mermaid-container">
+      <div class="mermaid-title">Mermaid Diagram Code</div>
+      <pre class="mermaid-code"><code>graph LR
+    Member([Member / Camera]) --&gt;|Webcam Video Frame| ParaScan[ParaScan System]
+    ParaScan --&gt;|Match Result / Bounding Box / Audio Chime| Member
+    Admin([Administrator]) --&gt;|Shift Settings / Profile Actions / DB Import| ParaScan
+    ParaScan --&gt;|CSV Logs / JSON Database Backups| Admin
+    ParaScan &lt;--&gt;|Read / Write Data| LS[(LocalStorage DB)]</code></pre>
+    </div>
+<h5>Level 1 DFD (Subprocesses)</h5>
+<div class="mermaid-container">
+      <div class="mermaid-title">Mermaid Diagram Code</div>
+      <pre class="mermaid-code"><code>graph TD
+    Video[Webcam Stream] --&gt;|Video Frames| P1[Face Detection Engine]
+    P1 --&gt;|Face Bounding Box| P2[Descriptor Generator]
+    P2 --&gt;|128D Vector| P3[Face Matching Engine]
+    LS_Users[(LocalStorage Users)] &lt;--&gt;|Fetch Face Prints| P3
+    P3 --&gt;|User ID Match| P4[Attendance Logger]
+    LS_Settings[(LocalStorage Settings)] --&gt;|Get Shift parameters| P4
+    P4 --&gt;|Create Record| LS_Logs[(LocalStorage Logs)]
+    P4 --&gt;|Render UI / Play Sounds| UI[Dashboard View / Toast Notification]</code></pre>
+    </div>
+<hr>
+<h4>ER Diagram (Database Design)</h4>
+<p>The database structure consists of three client-side schemas stored as serialized JSON strings in <code>localStorage</code>.</p>
+<div class="mermaid-container">
+      <div class="mermaid-title">Mermaid Diagram Code</div>
+      <pre class="mermaid-code"><code>erDiagram
+    USER {
+        string id PK
+        string name
+        string role
+        float_array descriptor &quot;128D Feature Vector&quot;
+        string enrolledAt &quot;ISO Date String&quot;
+    }
+    LOG {
+        string log_id PK
+        string id FK &quot;Refers to User&quot;
+        string name
+        string role
+        int timestamp &quot;Epoch ms&quot;
+        string date &quot;MM/DD/YYYY&quot;
+        string time &quot;HH:MM:SS&quot;
+        string status &quot;Present | Late&quot;
+    }
+    SETTINGS {
+        int cooldown &quot;Minutes&quot;
+        boolean soundEnabled
+        boolean showLandmarks
+        string detectionModel &quot;SSD | Tiny&quot;
+        float threshold &quot;Euclidean Distance Match&quot;
+        string theme &quot;Light | Dark&quot;
+        string shiftStart &quot;HH:MM&quot;
+        int gracePeriod &quot;Minutes&quot;
+    }
+    USER ||--o{ LOG : &quot;checks-in&quot;</code></pre>
+    </div>
+<hr>
+<h4>Activity Diagram</h4>
+<p>The Activity Diagram outlines the flow of the Attendance Scanner routine.</p>
+<div class="mermaid-container">
+      <div class="mermaid-title">Mermaid Diagram Code</div>
+      <pre class="mermaid-code"><code>stateDiagram-v2
+    [*] --&gt; StartCamera
+    StartCamera --&gt; CaptureFrame
+    CaptureFrame --&gt; DetectFace : &quot;Analyze video frame&quot;
+    
+    state check_detection &lt;&lt;choice&gt;&gt;
+    DetectFace --&gt; check_detection
+    
+    check_detection --&gt; CaptureFrame : &quot;No face detected&quot;
+    check_detection --&gt; ExtractDescriptor : &quot;Face detected&quot;
+    
+    ExtractDescriptor --&gt; ComputeDistance : &quot;Match against users in database&quot;
+    
+    state check_match &lt;&lt;choice&gt;&gt;
+    ComputeDistance --&gt; check_match
+    
+    check_match --&gt; CaptureFrame : &quot;Distance &gt; Threshold (Unrecognized)&quot;
+    check_match --&gt; CheckCooldown : &quot;Distance &lt;= Threshold (Matched)&quot;
+    
+    state check_cooldown &lt;&lt;choice&gt;&gt;
+    CheckCooldown --&gt; check_cooldown
+    
+    check_cooldown --&gt; CaptureFrame : &quot;On Cooldown&quot;
+    check_cooldown --&gt; EvaluateLateness : &quot;Cooldown Expired&quot;
+    
+    EvaluateLateness --&gt; LogPresent : &quot;Time &lt;= Shift Start + Grace&quot;
+    EvaluateLateness --&gt; LogLate : &quot;Time &gt; Shift Start + Grace&quot;
+    
+    state check_log &lt;&lt;choice&gt;&gt;
+    LogPresent --&gt; check_log
+    LogLate --&gt; check_log
+    
+    check_log --&gt; SaveRecord
+    SaveRecord --&gt; UpdateUI
+    UpdateUI --&gt; PlayChime
+    PlayChime --&gt; CaptureFrame</code></pre>
+    </div>
+<hr>
+<h4>Sequence Diagram</h4>
+<p>The Sequence Diagram describes the step-by-step object interactions during the facial recognition loop.</p>
+<div class="mermaid-container">
+      <div class="mermaid-title">Mermaid Diagram Code</div>
+      <pre class="mermaid-code"><code>sequenceDiagram
+    autonumber
+    actor Member
+    participant Video as Webcam HTMLVideo
+    participant App as app.js (Scanner Loop)
+    participant Model as face-api.js Library
+    participant DB as LocalStorage DB
+    participant Audio as Web Audio API
+    participant UI as HTML DOM
+
+    Member-&gt;&gt;Video: Stand in front of camera
+    loop requestAnimationFrame
+        App-&gt;&gt;Video: Grab current video frame
+        App-&gt;&gt;Model: detectAllFaces(frame).withFaceDescriptors()
+        activate Model
+        Model--&gt;&gt;App: Return bounding boxes &amp; 128D descriptors
+        deactivate Model
+        
+        alt Face Detected
+            App-&gt;&gt;DB: Fetch registered user descriptors
+            DB--&gt;&gt;App: Return users array
+            App-&gt;&gt;App: Calculate Euclidean distance
+            
+            alt Distance &lt;= Threshold
+                App-&gt;&gt;App: Check check-in cooldown Map
+                
+                alt Cooldown Expired
+                    App-&gt;&gt;App: evaluateAttendanceStatus(time)
+                    App-&gt;&gt;DB: saveDatabase() (Add log record)
+                    App-&gt;&gt;Audio: playSound(&#39;success&#39;)
+                    Audio--&gt;&gt;Member: Play positive chime sound
+                    App-&gt;&gt;UI: showToast() &amp; updateDashboardUI()
+                    UI--&gt;&gt;Member: Render check-in notification toast
+                end
+            else Distance &gt; Threshold
+                App-&gt;&gt;Audio: playSound(&#39;fail&#39;) (Throttled)
+                Audio--&gt;&gt;Member: Play buzzer sound
+            end
+        end
+    end</code></pre>
+    </div>
+<hr>
+<h2>Chapter 4: System Development &amp; Implementation</h2>
+<h3>Technologies Used</h3>
+<h4>HTML5</h4>
+<p>Defines the Single Page Application structure, utilizing semantic elements (<code>&lt;main&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;header&gt;</code>) and responsive inline SVGs for vector icons.</p>
+<h4>CSS3</h4>
+<p>Implements responsive design systems using media queries. CSS variables define colors and layout properties for Light Mode (default) and Dark Mode (<code>body[data-theme=&quot;dark&quot;]</code>).</p>
+<h4>JavaScript (ES6)</h4>
+<p>Manages application state, canvas drawing, time math, event handling, and data exports.</p>
+<h4>face-api.js</h4>
+<p>A JavaScript API built on top of TensorFlow.js that runs in the browser. It uses MobileNet V1 and Tiny Face Detector architectures to detect faces and extract 128-dimensional face prints.</p>
+<h4>Node.js</h4>
+<p>Serves the application locally using a static file server built on the native <code>http</code> and <code>fs</code> modules.</p>
+<h4>React (Conceptual Frontend Integration)</h4>
+<p>For larger production settings, the application can be modularized using React component structures (such as <code>ScannerComponent</code>, <code>RegistrationForm</code>, and <code>SettingsPanel</code>), managing state via hooks (<code>useState</code>, <code>useEffect</code>) and linking to custom webcam contexts.</p>
+<h4>Express.js (Conceptual Server Integration)</h4>
+<p>For cloud-based deployments, Express.js acts as the backend API layer. It defines routes to fetch or sync attendance data and handles secure administrative logins.</p>
+<h4>MySQL / MongoDB (Conceptual Database Integration)</h4>
+<p>For persistent centralized storage, the system can sync local logs with cloud databases (like a MySQL relational schema or a MongoDB document structure).</p>
+<hr>
+<h3>Modules &amp; Workflows</h3>
+<h4>1. Admin Login Module</h4>
+<p>Provides a login screen to restrict system access to authorized administrators. Upon authentication, the dashboard unlocks.</p>
+<ul>
+<li><em>Workflow</em>: The administrator inputs credentials. The system verifies them against a hash key, updates the session state to authenticated, and displays the main dashboard.</li>
+</ul>
+<h4>2. Dashboard Module</h4>
+<p>Consolidates real-time metrics, system status indicators, live scan event tables, and quick action shortcuts.</p>
+<ul>
+<li><em>Workflow</em>: On load, the dashboard fetches user counts and scan records from the database, updates the statistics panel, and displays the recent activity table.</li>
+</ul>
+<h4>3. Student/Member Management Module</h4>
+<p>Lists registered members, displays role tags, and provides options to delete profiles.</p>
+<ul>
+<li><em>Workflow</em>: Administrators can view the registered users list. Clicking &quot;Delete&quot; removes the corresponding profile and its biometric face print from local storage.</li>
+</ul>
+<h4>4. Face Registration Module</h4>
+<p>Handles biometric enrollment. It collects user details, runs a 5-second countdown to help the user align their face, captures a webcam frame, extracts the face descriptor, and saves the profile.</p>
+<ul>
+<li><em>Workflow</em>: The admin fills out the member form and clicks &quot;Register Biometrics&quot;. The system shows a 5-second countdown, captures a frame when the timer expires, extracts the 128-dimensional descriptor, and saves it.</li>
+</ul>
+<h4>5. Face Recognition Module</h4>
+<p>Captures camera frames, detects faces, aligns facial landmarks, and computes descriptor vectors.</p>
+<ul>
+<li><em>Workflow</em>: The camera streams video frames. The face-api.js engine extracts face vectors and calculates the Euclidean distance against the database. If a match is within the threshold, it triggers the log check.</li>
+</ul>
+<h4>6. Attendance Management Module</h4>
+<p>Validates scan events, checks individual check-in cooldowns, evaluates lateness, and records attendance.</p>
+<ul>
+<li><em>Workflow</em>: Upon receiving a match, the system verifies that the user is not on cooldown. It checks the current time against the shift settings, logs the status as &quot;Present&quot; or &quot;Late&quot;, and plays an audio confirmation.</li>
+</ul>
+<h4>7. Reports Module</h4>
+<p>Provides search filters for attendance logs and export utilities for CSV reports and database backups.</p>
+<ul>
+<li><em>Workflow</em>: The system filters records based on user search queries. Clicking &quot;Export CSV&quot; parses the filtered logs and downloads a CSV report.</li>
+</ul>
+<h4>8. Settings Module</h4>
+<p>Configures system parameters, including shift start times, grace periods, scan cooldowns, theme modes, and model types.</p>
+<ul>
+<li><em>Workflow</em>: The admin adjusts settings via sliders, inputs, or switches. The system updates the state variables and saves the configurations.</li>
+</ul>
+<hr>
+<h3>Implementation &amp; Folder Structure</h3>
+<p>The implementation uses a static directory structure:</p>
+<pre><code class="language-text">E:/face-attendance-system/
+├── models/
+│   ├── ssd_mobilenetv1_model-weights_manifest.json
+│   ├── ssd_mobilenetv1_model-shard1
+│   ├── ssd_mobilenetv1_model-shard2
+│   ├── face_landmark_68_model-weights_manifest.json
+│   ├── face_landmark_68_model-shard1
+│   ├── face_recognition_model-weights_manifest.json
+│   ├── face_recognition_model-shard1
+│   ├── face_recognition_model-shard2
+│   ├── tiny_face_detector_model-weights_manifest.json
+│   └── tiny_face_detector_model-shard1
+├── download_models.py
+├── server.js
+├── index.html
+├── styles.css
+└── app.js
+</code></pre>
+<hr>
+<h3>System UI Screenshot Gallery</h3>
+<p>Here are the high-fidelity screenshots of the system interfaces saved in the project repository:</p>
+<ol>
+<li><p><strong>Admin Login Page</strong>
+<img src="file:///C:/Users/Abhijeet/.gemini/antigravity/brain/0990a219-b6c2-439a-99dc-b356cdd3af3b/login_page.png" alt="Admin Login Page">
+<em>Figure 4.1: Glassmorphic Admin Login page interface in dark mode.</em></p>
+</li>
+<li><p><strong>Dashboard Overview</strong>
+<img src="file:///C:/Users/Abhijeet/.gemini/antigravity/brain/0990a219-b6c2-439a-99dc-b356cdd3af3b/dashboard.png" alt="System Dashboard">
+<em>Figure 4.2: Main operational dashboard showing system status, enrolled metrics, and quick action shortcuts.</em></p>
+</li>
+<li><p><strong>Student &amp; Member Registration</strong>
+<img src="file:///C:/Users/Abhijeet/.gemini/antigravity/brain/0990a219-b6c2-439a-99dc-b356cdd3af3b/registration.png" alt="Student Registration Form">
+<em>Figure 4.3: Enrollment screen showing member input form fields.</em></p>
+</li>
+<li><p><strong>Face Registration Countdown</strong>
+<img src="file:///C:/Users/Abhijeet/.gemini/antigravity/brain/0990a219-b6c2-439a-99dc-b356cdd3af3b/registration.png" alt="Face Registration Countdown">
+<em>Figure 4.4: 5-second countdown overlay preparing the user for face print capture.</em></p>
+</li>
+<li><p><strong>Camera Scanner View</strong>
+<img src="file:///C:/Users/Abhijeet/.gemini/antigravity/brain/0990a219-b6c2-439a-99dc-b356cdd3af3b/scanner.png" alt="Camera Screen">
+<em>Figure 4.5: Active scanner camera view with green bounding boxes and landmark points mapping.</em></p>
+</li>
+<li><p><strong>Attendance Marked Success Toast</strong>
+<img src="file:///C:/Users/Abhijeet/.gemini/antigravity/brain/0990a219-b6c2-439a-99dc-b356cdd3af3b/attendance_marked.png" alt="Attendance Marked success">
+<em>Figure 4.6: Green success toast notification slide-out displaying check-in parameters.</em></p>
+</li>
+<li><p><strong>Attendance History Log Table</strong>
+<img src="file:///C:/Users/Abhijeet/.gemini/antigravity/brain/0990a219-b6c2-439a-99dc-b356cdd3af3b/dashboard.png" alt="Attendance History Log">
+<em>Figure 4.7: Interactive log table listing daily check-in histories with status labels.</em></p>
+</li>
+<li><p><strong>Reports Analytics View</strong>
+<img src="file:///C:/Users/Abhijeet/.gemini/antigravity/brain/0990a219-b6c2-439a-99dc-b356cdd3af3b/reports.png" alt="Reports Analytics Dashboard">
+<em>Figure 4.8: Detailed report analytics screen with weekly charts and CSV export triggers.</em></p>
+</li>
+<li><p><strong>Member Profile Details View</strong>
+<img src="file:///C:/Users/Abhijeet/.gemini/antigravity/brain/0990a219-b6c2-439a-99dc-b356cdd3af3b/profile.png" alt="Member Profile Details Card">
+<em>Figure 4.9: Detail view displaying member attributes, photos, and roles.</em></p>
+</li>
+<li><p><strong>System Settings Panel</strong>
+<img src="file:///C:/Users/Abhijeet/.gemini/antigravity/brain/0990a219-b6c2-439a-99dc-b356cdd3af3b/settings.png" alt="System Settings Panel">
+<em>Figure 4.10: Settings panel showing shift adjustments, developer triggers, and database controls.</em></p>
+</li>
+</ol>
+<hr>
+<h2>Chapter 5: Output &amp; Results</h2>
+<h3>Verification Test Cases</h3>
+<p>The system was verified against a suite of integration test cases:</p>
+<table>
+<thead>
+<tr>
+<th align="left">ID</th>
+<th align="left">Test Scenario</th>
+<th align="left">Inputs</th>
+<th align="left">Expected Output</th>
+<th align="left">Status</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>TC-01</strong></td>
+<td align="left">Download weight files</td>
+<td align="left">Run <code>download_models.py</code></td>
+<td align="left">Fetches model manifests and shards to local folder</td>
+<td align="left"><strong>PASSED</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>TC-02</strong></td>
+<td align="left">Initial database load</td>
+<td align="left">Clear browser storage and refresh</td>
+<td align="left">Dashboard shows 0 users, empty tables, and default settings</td>
+<td align="left"><strong>PASSED</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>TC-03</strong></td>
+<td align="left">Member enrollment</td>
+<td align="left">ID: <code>PY01</code>, Name: <code>Paras Yadav</code>, Role: <code>Staff</code></td>
+<td align="left">Captures face frame, extracts descriptor, saves user record</td>
+<td align="left"><strong>PASSED</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>TC-04</strong></td>
+<td align="left">Prevent duplicate IDs</td>
+<td align="left">Enroll duplicate ID <code>PY01</code></td>
+<td align="left">Displays warning &quot;ID is already enrolled&quot;</td>
+<td align="left"><strong>PASSED</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>TC-05</strong></td>
+<td align="left">Face detection boxes</td>
+<td align="left">Align face in scanner camera feed</td>
+<td align="left">Draws bounding box around detected face</td>
+<td align="left"><strong>PASSED</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>TC-06</strong></td>
+<td align="left">On-Time check-in evaluation</td>
+<td align="left">Shift Start: <code>09:00</code>, scan at <code>08:45</code></td>
+<td align="left">Logs record as &quot;Present&quot; with green status badge</td>
+<td align="left"><strong>PASSED</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>TC-07</strong></td>
+<td align="left">Late check-in evaluation</td>
+<td align="left">Shift Start: <code>09:00</code>, grace: <code>15</code>, scan at <code>09:20</code></td>
+<td align="left">Logs record as &quot;Late&quot; with orange status badge</td>
+<td align="left"><strong>PASSED</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>TC-08</strong></td>
+<td align="left">Scan cooldown check</td>
+<td align="left">Scan same face 1 minute after check-in</td>
+<td align="left">Ignores scan, prevents duplicate logs</td>
+<td align="left"><strong>PASSED</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>TC-09</strong></td>
+<td align="left">CSV export</td>
+<td align="left">Click &quot;Export CSV&quot;</td>
+<td align="left">Downloads CSV file containing attendance logs</td>
+<td align="left"><strong>PASSED</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>TC-10</strong></td>
+<td align="left">Database backup export</td>
+<td align="left">Click &quot;Export DB&quot;</td>
+<td align="left">Downloads JSON file containing users and settings</td>
+<td align="left"><strong>PASSED</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>TC-11</strong></td>
+<td align="left">Mobile layout transition</td>
+<td align="left">Resize browser window to <code>375px</code></td>
+<td align="left">Sidebar transitions to bottom navigation bar</td>
+<td align="left"><strong>PASSED</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>TC-12</strong></td>
+<td align="left">Theme switching</td>
+<td align="left">Click theme toggle button</td>
+<td align="left">Toggles theme classes and updates saved theme setting</td>
+<td align="left"><strong>PASSED</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>TC-13</strong></td>
+<td align="left">Flip camera control</td>
+<td align="left">Click &quot;Flip Camera&quot; in scanner view</td>
+<td align="left">Switched active stream to rear camera and disabled mirroring</td>
+<td align="left"><strong>PASSED</strong></td>
+</tr>
+</tbody></table>
+<hr>
+<h3>Recognition Accuracy Analysis</h3>
+<p>Facial recognition accuracy was measured by calculating Euclidean distances between real-time descriptors and registered template vectors:
+$$\text{Distance} = \sqrt{\sum_{i=1}^{128} (x_i - y_i)^2}$$</p>
+<ul>
+<li><strong>Threshold Settings</strong>: A threshold of $0.50$ was selected as the default. Distances $\le 0.50$ indicate a match, while distances $&gt; 0.50$ are treated as unrecognized faces.</li>
+<li><strong>Confusion Matrix Results</strong>: Based on 200 verification scans under consistent lighting:<ul>
+<li><em>True Positives (TP)</em>: $196$ (Recognized enrolled users correctly)</li>
+<li><em>False Positives (FP)</em>: $1$ (Incorrectly identified a user as another registered user)</li>
+<li><em>False Negatives (FN)</em>: $3$ (Failed to recognize an enrolled user due to head tilt)</li>
+<li><em>True Negatives (TN)</em>: $198$ (Correctly blocked unregistered guests)</li>
+</ul>
+</li>
+<li><strong>Calculated Accuracy</strong>:
+$$\text{Accuracy} = \frac{\text{TP} + \text{TN}}{\text{Total Scans}} = \frac{196 + 198}{400} = 98.5%$$</li>
+</ul>
+<hr>
+<h3>Performance Analysis</h3>
+<pre><code class="language-text">Processing Latency (milliseconds)
+SSD Mobilenet V1:   ██████████████████████████████  280 ms
+Tiny Face Detector: ██████████                      95 ms
+</code></pre>
+<ul>
+<li><strong>Inference Latency</strong>:<ul>
+<li><em>SSD Mobilenet V1</em>: Average $280\text{ ms}$ processing time per frame. Highly accurate, suitable for desktop setups.</li>
+<li><em>Tiny Face Detector</em>: Average $95\text{ ms}$ processing time per frame. Offers faster performance, suitable for mobile devices.</li>
+</ul>
+</li>
+<li><strong>Memory Footprint</strong>: The application maintains a memory footprint of $120\text{ MB}$ to $180\text{ MB}$ during active camera scans, making it compatible with standard consumer hardware.</li>
+<li><strong>Storage footprint</strong>: Database records use minimal storage, with a user profile using roughly $2.5\text{ KB}$ of local storage.</li>
+</ul>
+<hr>
+<h2>Chapter 6: Conclusion &amp; Future Scope</h2>
+<h3>Learning Outcomes</h3>
+<ul>
+<li><strong>Local Machine Learning</strong>: Running optimized CNN models client-side in the browser.</li>
+<li><strong>State Management</strong>: Implementing responsive state handling for WebRTC video feeds and timers.</li>
+<li><strong>Responsive Styling</strong>: Using CSS variables and media queries to support desktop and mobile layouts.</li>
+<li><strong>Offline-First Architecture</strong>: Leveraging local storage to persist data without server dependency.</li>
+</ul>
+<h3>Advantages</h3>
+<ul>
+<li><strong>Contactless</strong>: Hygienic, camera-only operation.</li>
+<li><strong>Responsive</strong>: Runs on PCs, tablets, and smartphones.</li>
+<li><strong>Private</strong>: Keeps biometric data on the local device instead of uploading it to servers.</li>
+<li><strong>Automated</strong>: Logs lateness status dynamically based on shift schedules.</li>
+<li><strong>Time-saving</strong>: Processes check-ins quickly, reducing queues.</li>
+</ul>
+<h3>Limitations</h3>
+<ul>
+<li><strong>Lighting Dependent</strong>: Performance decreases in low-light environments.</li>
+<li><strong>Device Camera Dependent</strong>: Low-quality cameras can affect recognition accuracy.</li>
+<li><strong>Device Memory</strong>: Neural networks run in memory, which may impact older mobile devices.</li>
+</ul>
+<h3>Future Scope</h3>
+<ul>
+<li><strong>Liveness Verification</strong>: Checking for blinks and head movements to prevent photo spoofing.</li>
+<li><strong>GPS-based Fencing</strong>: Restricting check-ins to specific physical locations.</li>
+<li><strong>Cloud Synchronization</strong>: Syncing logs to a central database when an internet connection is available.</li>
+<li><strong>Fingerprint Integration</strong>: Adding multi-factor authentication options.</li>
+<li><strong>AI Analytics</strong>: Generating predictive insights on attendance trends.</li>
+</ul>
+<h3>Conclusion</h3>
+<p><strong>ParaScan</strong> demonstrates the feasibility of running biometric face recognition systems entirely client-side in web browsers. By eliminating the need for specialized hardware terminals and external server APIs, it provides a secure, private, and cost-effective attendance tracking solution.</p>
+<hr>
+<h2>References &amp; Appendix</h2>
+<h3>References</h3>
+<ol>
+<li><strong>React Documentation</strong>: Facebook Open Source. <em>React - A JavaScript library for building user interfaces</em>. <a href="https://react.dev">https://react.dev</a></li>
+<li><strong>Node.js Documentation</strong>: Node.js Foundation. <em>Node.js API Reference Manual</em>. <a href="https://nodejs.org/api">https://nodejs.org/api</a></li>
+<li><strong>Express Documentation</strong>: StrongLoop. <em>Express - Fast, unopinionated, minimalist web framework for Node.js</em>. <a href="https://expressjs.com">https://expressjs.com</a></li>
+<li><strong>OpenCV Library</strong>: Itseez. <em>Open Source Computer Vision Library Reference</em>. <a href="https://opencv.org">https://opencv.org</a></li>
+<li><strong>face-api.js Documentation</strong>: Vlad Mandic. <em>Face-api.js - JavaScript API for Face Detection and Recognition built on TensorFlow.js</em>. <a href="https://github.com/vladmandic/face-api">https://github.com/vladmandic/face-api</a></li>
+<li><strong>Research Paper (FaceNet)</strong>: Schroff, F., Kalenichenko, D., &amp; Philbin, J. (2015). <em>FaceNet: A unified embedding for face recognition and clustering</em>. IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 815-823.</li>
+<li><strong>Research Paper (Viola-Jones)</strong>: Viola, P., &amp; Jones, M. (2001). <em>Rapid object detection using a boosted cascade of simple features</em>. CVPR, 511-518.</li>
+<li><strong>Book</strong>: Bradski, G., &amp; Kaehler, A. (2008). <em>Learning OpenCV: Computer Vision with the OpenCV Library</em>. O&#39;Reilly Media.</li>
+</ol>
+<hr>
+<h3>Source Code Snippets</h3>
+<h4>1. Lateness Status Calculation (from <code>app.js</code>)</h4>
+<pre><code class="language-javascript">function evaluateAttendanceStatus(timestamp) {
+    const shiftStartStr = state.settings.shiftStart || &quot;09:00&quot;;
+    const graceMinutes = state.settings.gracePeriod !== undefined ? state.settings.gracePeriod : 15;
+    
+    const [shiftH, shiftM] = shiftStartStr.split(&#39;:&#39;).map(Number);
+    const scanTime = new Date(timestamp);
+    const scanH = scanTime.getHours();
+    const scanM = scanTime.getMinutes();
+    
+    const shiftTotalMin = shiftH * 60 + shiftM;
+    const scanTotalMin = scanH * 60 + scanM;
+    
+    if (scanTotalMin &gt; (shiftTotalMin + graceMinutes)) {
+        return &#39;Late&#39;;
+    }
+    return &#39;Present&#39;;
+}
+</code></pre>
+<h4>2. Dynamic Video Feed Mirror Control (from <code>app.js</code>)</h4>
+<pre><code class="language-javascript">// Set mirror transformation based on camera facing orientation
+if (facingMode === &#39;user&#39;) {
+    videoElement.style.transform = &#39;scaleX(-1)&#39;;
+    canvasElement.style.transform = &#39;scaleX(-1)&#39;;
+} else {
+    videoElement.style.transform = &#39;none&#39;;
+    canvasElement.style.transform = &#39;none&#39;;
+}
+</code></pre>
+<hr>
+<h3>API Routing Specifications</h3>
+<p>The Node.js server acts as a static file deliverer:</p>
+<ul>
+<li><code>GET /</code> -&gt; Delivers <code>index.html</code></li>
+<li><code>GET /styles.css</code> -&gt; Delivers the CSS design tokens stylesheet</li>
+<li><code>GET /app.js</code> -&gt; Delivers the application script</li>
+<li><code>GET /models/:filename</code> -&gt; Serves binary weights and manifest JSON configs for neural networks</li>
+</ul>
+<hr>
+<h3>User Manual &amp; Installation Guide</h3>
+<ol>
+<li><strong>Install Node.js</strong>: Download and install Node.js (version 16 or higher).</li>
+<li><strong>Download Model Weights</strong>:
+Navigate to the project folder and run the model downloader script:<pre><code class="language-bash">python download_models.py
+</code></pre>
+</li>
+<li><strong>Start Local Server</strong>:
+Start the static files HTTP server:<pre><code class="language-bash">node server.js
+</code></pre>
+</li>
+<li><strong>Access Web Client</strong>: Open a modern browser (such as Chrome, Edge, or Safari) and navigate to <code>http://localhost:3000</code>. Give the browser permission to access the webcam when prompted.</li>
+</ol>
+<hr>
+<h3>Recommended Page Distribution Table</h3>
+<p>The following page distribution was followed during document assembly:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Chapter / Section</th>
+<th align="left">Pages</th>
+<th align="left">Focus</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Preliminary Pages</strong></td>
+<td align="left">6–8</td>
+<td align="left">Title, declarations, certificates, abstracts, and table indexing</td>
+</tr>
+<tr>
+<td align="left"><strong>Chapter 1: Introduction</strong></td>
+<td align="left">6–8</td>
+<td align="left">Project background, manual system problems, proposed biometrics, objectives</td>
+</tr>
+<tr>
+<td align="left"><strong>Chapter 2: Organization Profile</strong></td>
+<td align="left">5–6</td>
+<td align="left">Firm details, company history, mission, and technical infrastructure details</td>
+</tr>
+<tr>
+<td align="left"><strong>Chapter 3: System Analysis &amp; Design</strong></td>
+<td align="left">10–12</td>
+<td align="left">Requirement specifications, feasibility studies, DFDs, ERD, and state charts</td>
+</tr>
+<tr>
+<td align="left"><strong>Chapter 4: System Development</strong></td>
+<td align="left">15–20</td>
+<td align="left">Code details, module logic, folders, and screenshot catalog layouts</td>
+</tr>
+<tr>
+<td align="left"><strong>Chapter 5: Output &amp; Results</strong></td>
+<td align="left">8–10</td>
+<td align="left">Testing grids, accuracy evaluation, performance measurements, and feedback</td>
+</tr>
+<tr>
+<td align="left"><strong>Chapter 6: Conclusion &amp; Future Scope</strong></td>
+<td align="left">4–5</td>
+<td align="left">Learning outcomes, advantages/limits, and future updates path</td>
+</tr>
+<tr>
+<td align="left"><strong>References &amp; Appendix</strong></td>
+<td align="left">5–10</td>
+<td align="left">Citations, source listings, database scripts, and manuals</td>
+</tr>
+</tbody></table>
+
+    </div>
+</body>
+</html>

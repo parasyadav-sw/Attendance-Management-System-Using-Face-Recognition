@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParaScan - Face Recognition Attendance System</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Face API JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
+                        <path d="M17 3h2a2 2 0 0 1 2 2v2"></path>
+                        <path d="M21 17v2a2 2 0 0 1-2 2h-2"></path>
+                        <path d="M7 21H5a2 2 0 0 1-2-2v-2"></path>
+                        <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                        <circle cx="9" cy="9" r="1.5" fill="currentColor"></circle>
+                        <circle cx="15" cy="9" r="1.5" fill="currentColor"></circle>
+                        <path d="M12 8v3h1"></path>
+                    </svg>
+                </div>
+                <div class="brand-info">
+                    <h1>ParaScan</h1>
+                    <span>AI Attendance</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-item active" data-tab="dashboard" id="btn-tab-dashboard">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-item" data-tab="scanner" id="btn-tab-scanner">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                    <span>Scanner</span>
+                </button>
+                <button class="nav-item" data-tab="registration" id="btn-tab-registration">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                    <span>Add Member</span>
+                </button>
+                <button class="nav-item" data-tab="settings" id="btn-tab-settings">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    <span>Settings</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <span class="status-dot" id="system-status-dot"></span>
+                    <span class="status-text" id="system-status-text">Models Loading...</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <h2 id="current-page-title">Dashboard</h2>
+                </div>
+                <div class="top-bar-actions">
+                    <div class="date-time-widget">
+                        <span id="current-time">00:00:00 AM</span>
+                        <span id="current-date">Friday, June 26, 2026</span>
+                    </div>
+                    <button class="theme-toggle-btn" id="btn-theme-toggle" title="Toggle Light/Dark Theme">
+                        <!-- Sun Icon (visible in light mode) -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun" id="sun-icon"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Scrollable Tab Contents -->
+            <div class="tab-viewport">
+                
+                <!-- TAB: DASHBOARD -->
+                <section class="tab-content active" id="tab-dashboard">
+                    <!-- Stat Cards Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon purple">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            </div>
+                            <div class="stat-data">
+                                <span class="stat-label">Total Enrolled</span>
+                                <h3 class="stat-value" id="stat-total-users">0</h3>
+                                <span class="stat-trend positive">Database Members</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon green">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                            </div>
+                            <div class="stat-data">
+                                <span class="stat-label">Present Today</span>
+                                <h3 class="stat-value" id="stat-present-users">0</h3>
+                                <span class="stat-trend positive" id="stat-present-change">Unique Scans</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon orange">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            </div>
+                            <div class="stat-data">
+                                <span class="stat-label">Attendance Rate</span>
+                                <h3 class="stat-value" id="stat-attendance-rate">0%</h3>
+                                <span class="stat-trend" id="stat-rate-text">Active members</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon purple-light">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            </div>
+                            <div class="stat-data">
+                                <span class="stat-label">System State</span>
+                                <h3 class="stat-value" style="font-size: 1.25rem;" id="stat-system-state">Initializing</h3>
+                                <span class="stat-trend text-purple-light" id="stat-engine-type">Local Face-API</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Section Grid -->
+                    <div class="dashboard-layout">
+                        <!-- Left Panel: Log Viewer -->
+                        <div class="card panel-logs">
+                            <div class="card-header">
+                                <div class="header-titles">
+                                    <h3>Attendance Records</h3>
+                                    <p>Live logging updates from scans</p>
+                                </div>
+                                <div class="header-actions">
+                                    <input type="text" placeholder="Search records..." class="search-input" id="log-search">
+                                    <button class="btn btn-primary btn-sm" id="btn-export-csv">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                        <span>Export CSV</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="table-container">
+                                <table class="logs-table" id="table-logs">
+                                    <thead>
+                                        <tr>
+                                            <th>Member ID</th>
+                                            <th>Name</th>
+                                            <th>Role</th>
+                                            <th>Timestamp</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="logs-tbody">
+                                        <!-- Populated dynamically via JS -->
+                                        <tr class="empty-row">
+                                            <td colspan="6">No attendance logs found for today.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Overview / Quick actions -->
+                        <div class="dashboard-side">
+                            <div class="card quick-actions-card">
+                                <div class="card-header">
+                                    <h3>Quick Commands</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="shortcut-list">
+                                        <button class="shortcut-btn" id="btn-scan-now">
+                                            <span class="btn-shortcut-icon green">
+                                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                                            </span>
+                                            <div class="btn-shortcut-text">
+                                                <strong>Launch Scanner</strong>
+                                                <span>Open camera for attendance</span>
+                                            </div>
+                                        </button>
+                                        
+                                        <button class="shortcut-btn" id="btn-add-now">
+                                            <span class="btn-shortcut-icon purple">
+                                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line></svg>
+                                            </span>
+                                            <div class="btn-shortcut-text">
+                                                <strong>Register Member</strong>
+                                                <span>Add new face to DB</span>
+                                            </div>
+                                        </button>
+
+                                        <button class="shortcut-btn danger-shortcut" id="btn-reset-db">
+                                            <span class="btn-shortcut-icon red">
+                                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                            </span>
+                                            <div class="btn-shortcut-text">
+                                                <strong>Clear Database</strong>
+                                                <span>Reset logs & users</span>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Registered Profiles list -->
+                            <div class="card profiles-list-card">
+                                <div class="card-header">
+                                    <h3>Enrolled Members</h3>
+                                </div>
+                                <div class="profiles-list-container">
+                                    <div class="profiles-list" id="enrolled-profiles-list">
+                                        <!-- Dynamically generated -->
+                                        <div class="empty-list-message">No members registered yet.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB: ATTENDANCE SCANNER -->
+                <section class="tab-content" id="tab-scanner">
+                    <div class="scanner-layout">
+                        <!-- Webcam Scanner Box -->
+                        <div class="scanner-container">
+                            <div class="webcam-viewport">
+                                <div class="camera-placeholder" id="scanner-placeholder">
+                                    <svg viewBox="0 0 24 24" width="64" height="64" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                                    <p>Webcam is off</p>
+                                    <button class="btn btn-success" id="btn-start-scanner">
+                                        Start Camera Scan
+                                    </button>
+                                </div>
+                                <video id="scanner-video" autoplay muted playsinline class="video-feed hidden"></video>
+                                <canvas id="scanner-overlay" class="overlay-canvas hidden"></canvas>
+                                
+                                <!-- Floating scanner HUD elements -->
+                                <div class="scanner-hud hidden" id="scanner-hud">
+                                    <div class="hud-scanning-line"></div>
+                                    <div class="hud-corners">
+                                        <div class="corner top-left"></div>
+                                        <div class="corner top-right"></div>
+                                        <div class="corner bottom-left"></div>
+                                        <div class="corner bottom-right"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Scanner Control Panel -->
+                            <div class="scanner-control-bar">
+                                <div class="control-group" style="display: flex; gap: 8px;">
+                                    <button class="btn btn-danger" id="btn-stop-scanner" disabled>
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+                                        <span>Stop Camera</span>
+                                    </button>
+                                    <button class="btn btn-secondary" id="btn-flip-scanner" title="Flip Camera Feed" disabled>
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                                        <span>Flip Camera</span>
+                                    </button>
+                                </div>
+                                <div class="status-banner" id="scanner-status-banner">
+                                    Ready to scan. Please start the camera.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Scanner Settings and Logs -->
+                        <div class="scanner-sidebar">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3>Match Controls</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label class="range-label">
+                                            <span>Match Threshold:</span>
+                                            <span class="range-value" id="threshold-val">0.50</span>
+                                        </label>
+                                        <input type="range" min="0.3" max="0.7" step="0.01" value="0.50" class="slider" id="threshold-slider">
+                                        <small class="help-text">Lower values require a stricter/closer match to identify faces.</small>
+                                    </div>
+
+                                    <div class="form-group" style="margin-top: 1.5rem;">
+                                        <label>Active Detection Model</label>
+                                        <div class="model-select-group">
+                                            <label class="model-option">
+                                                <input type="radio" name="detection-model" value="ssd" checked>
+                                                <div class="model-option-card">
+                                                    <strong>SSD Mobilenet</strong>
+                                                    <span>Highly accurate, slower</span>
+                                                </div>
+                                            </label>
+                                            <label class="model-option">
+                                                <input type="radio" name="detection-model" value="tiny">
+                                                <div class="model-option-card">
+                                                    <strong>Tiny Face Detector</strong>
+                                                    <span>Very fast, lower accuracy</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Live Scan Feeds (Floating Cards) -->
+                            <div class="card scan-activity-card">
+                                <div class="card-header">
+                                    <h3>Scan Feed</h3>
+                                </div>
+                                <div class="activity-feed" id="live-scan-feed">
+                                    <div class="empty-feed-message">Start scanning to view logs...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB: REGISTRATION -->
+                <section class="tab-content" id="tab-registration">
+                    <div class="registration-layout">
+                        <!-- Left Panel: Form -->
+                        <div class="card registration-form-card">
+                            <div class="card-header">
+                                <h3>Member Information</h3>
+                                <p>Enter details before capturing face data</p>
+                            </div>
+                            <div class="card-body">
+                                <form id="registration-form" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label for="reg-id">Employee / Student ID</label>
+                                        <input type="text" id="reg-id" placeholder="e.g. EMP-103, STU-205" required autocomplete="off">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="reg-name">Full Name</label>
+                                        <input type="text" id="reg-name" placeholder="e.g. John Doe" required autocomplete="off">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="reg-role">Department / Role</label>
+                                        <select id="reg-role">
+                                            <option value="Staff">Staff</option>
+                                            <option value="Student">Student</option>
+                                            <option value="Faculty">Faculty</option>
+                                            <option value="Guest">Guest</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="guidelines-card">
+                                        <h4>Capture Guidelines</h4>
+                                        <ul>
+                                            <li>Ensure good lighting on your face.</li>
+                                            <li>Keep your face centered and look straight into the camera.</li>
+                                            <li>Remove sunglasses, hats, or heavy masks.</li>
+                                            <li>Maintain a neutral expression.</li>
+                                        </ul>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Capture Webcam -->
+                        <div class="card registration-capture-card">
+                            <div class="card-header">
+                                <h3>Biometric Capture</h3>
+                            </div>
+                            <div class="capture-viewport">
+                                <div class="camera-placeholder" id="capture-placeholder">
+                                    <svg viewBox="0 0 24 24" width="64" height="64" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                                    <p>Capture camera is inactive</p>
+                                    <button class="btn btn-primary" id="btn-activate-capture-cam">
+                                        Activate Camera
+                                    </button>
+                                </div>
+                                <video id="capture-video" autoplay muted playsinline class="video-feed hidden"></video>
+                                <canvas id="capture-overlay" class="overlay-canvas hidden"></canvas>
+                                
+                                <!-- Countdown overlay -->
+                                <div class="countdown-overlay hidden" id="countdown-overlay">
+                                    <span id="countdown-number">3</span>
+                                </div>
+                            </div>
+
+                            <div class="capture-control-bar" style="display: flex; gap: 8px;">
+                                <div style="display: flex; gap: 8px;">
+                                    <button class="btn btn-danger" id="btn-deactivate-capture-cam" disabled>
+                                        Turn Off
+                                    </button>
+                                    <button class="btn btn-secondary" id="btn-flip-capture" title="Flip Camera Feed" disabled>
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                                        <span>Flip Camera</span>
+                                    </button>
+                                </div>
+                                <button class="btn btn-primary" id="btn-enroll-capture" disabled>
+                                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                    <span>Register Biometrics</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB: SETTINGS -->
+                <section class="tab-content" id="tab-settings">
+                    <div class="settings-layout">
+                        <div class="card settings-card">
+                            <div class="card-header">
+                                <h3>System Settings</h3>
+                                <p>Adjust system configurations and parameters</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="settings-section">
+                                    <h4>Scanning Parameters</h4>
+                                    <div class="form-group setting-row">
+                                        <div class="setting-desc">
+                                            <strong>Attendance Cooldown (Minutes)</strong>
+                                            <span>Time to wait before allowing the same person to log attendance again.</span>
+                                        </div>
+                                        <input type="number" id="setting-cooldown" min="1" max="120" value="5" class="number-input">
+                                    </div>
+                                    <div class="form-group setting-row">
+                                        <div class="setting-desc">
+                                            <strong>Shift Start Time</strong>
+                                            <span>The official start time of the daily shift (HH:MM).</span>
+                                        </div>
+                                        <input type="time" id="setting-shift-start" value="09:00" class="number-input" style="width: 120px;">
+                                    </div>
+                                    <div class="form-group setting-row">
+                                        <div class="setting-desc">
+                                            <strong>Grace Period (Minutes)</strong>
+                                            <span>Allowed late margin before check-ins are logged as Late.</span>
+                                        </div>
+                                        <input type="number" id="setting-grace-period" min="0" max="180" value="15" class="number-input">
+                                    </div>
+                                    <div class="form-group setting-row">
+                                        <div class="setting-desc">
+                                            <strong>Sound Feedback</strong>
+                                            <span>Play audio alerts upon successful scans and error states.</span>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" id="setting-sound" checked>
+                                            <span class="slider-round"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="settings-section">
+                                    <h4>Developer Settings</h4>
+                                    <div class="form-group setting-row">
+                                        <div class="setting-desc">
+                                            <strong>Show Face Landmarks</strong>
+                                            <span>Renders face landmarks (eyes, nose, mouth skeleton) on the scan viewport.</span>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" id="setting-landmarks">
+                                            <span class="slider-round"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group setting-row">
+                                        <div class="setting-desc">
+                                            <strong>Export / Import Profiles</strong>
+                                            <span>Download enrolled face database as JSON or load a previously saved database.</span>
+                                        </div>
+                                        <div class="setting-buttons">
+                                            <button class="btn btn-secondary btn-sm" id="btn-export-profiles">Export DB</button>
+                                            <button class="btn btn-secondary btn-sm" id="btn-import-profiles-trigger">Import DB</button>
+                                            <input type="file" id="input-import-profiles" accept=".json" style="display: none;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Attendance Notification Toast -->
+    <div class="attendance-toast hidden" id="attendance-toast">
+        <div class="toast-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        </div>
+        <div class="toast-body">
+            <h4 id="toast-title">Scan Logged</h4>
+            <p id="toast-message">User has been checked in.</p>
+        </div>
+    </div>
+
+    <!-- Main JS Application -->
+    <script src="app.js"></script>
+</body>
+</html>
