@@ -12,6 +12,12 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Face API JS -->
     <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
+    <!-- PDF.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- Tesseract.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <!-- Socket.IO Client -->
+    <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
     <div class="app-container">
@@ -49,6 +55,28 @@
                     <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
                     <span>Add Member</span>
                 </button>
+                
+                <!-- Divider for Exam System Mode -->
+                <div style="padding: 10px 18px 4px; font-size: 0.68rem; font-weight: 750; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px;">Exam Mode</div>
+                
+                <button class="nav-item" data-tab="hall-tickets" id="btn-tab-hall-tickets">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    <span>Hall Tickets</span>
+                </button>
+                <button class="nav-item" data-tab="registered-students" id="btn-tab-registered-students">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    <span>Students List</span>
+                </button>
+                <button class="nav-item" data-tab="exam-scanner" id="btn-tab-exam-scanner">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                    <span>Exam Scanner</span>
+                </button>
+                <button class="nav-item" data-tab="exam-reports" id="btn-tab-exam-reports">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span>Exam Reports</span>
+                </button>
+
+                <div style="padding: 10px 18px 4px; font-size: 0.68rem; font-weight: 750; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px;">System</div>
                 <button class="nav-item" data-tab="settings" id="btn-tab-settings">
                     <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                     <span>Settings</span>
@@ -144,6 +172,9 @@
                                     <p>Live logging updates from scans</p>
                                 </div>
                                 <div class="header-actions">
+                                    <select class="search-input" id="log-shift-filter" style="width: 140px; margin-right: 8px;">
+                                        <option value="">All Shifts</option>
+                                    </select>
                                     <input type="text" placeholder="Search records..." class="search-input" id="log-search">
                                     <button class="btn btn-primary btn-sm" id="btn-export-csv">
                                         <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
@@ -176,44 +207,6 @@
 
                         <!-- Right Panel: Overview / Quick actions -->
                         <div class="dashboard-side">
-                            <div class="card quick-actions-card">
-                                <div class="card-header">
-                                    <h3>Quick Commands</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="shortcut-list">
-                                        <button class="shortcut-btn" id="btn-scan-now">
-                                            <span class="btn-shortcut-icon green">
-                                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                                            </span>
-                                            <div class="btn-shortcut-text">
-                                                <strong>Launch Scanner</strong>
-                                                <span>Open camera for attendance</span>
-                                            </div>
-                                        </button>
-                                        
-                                        <button class="shortcut-btn" id="btn-add-now">
-                                            <span class="btn-shortcut-icon purple">
-                                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line></svg>
-                                            </span>
-                                            <div class="btn-shortcut-text">
-                                                <strong>Register Member</strong>
-                                                <span>Add new face to DB</span>
-                                            </div>
-                                        </button>
-
-                                        <button class="shortcut-btn danger-shortcut" id="btn-reset-db">
-                                            <span class="btn-shortcut-icon red">
-                                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                                            </span>
-                                            <div class="btn-shortcut-text">
-                                                <strong>Clear Database</strong>
-                                                <span>Reset logs & users</span>
-                                            </div>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
 
                             <!-- Registered Profiles list -->
                             <div class="card profiles-list-card">
@@ -359,6 +352,13 @@
                                         </select>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label for="reg-assigned-shift">Assign Work Shift</label>
+                                        <select id="reg-assigned-shift" required>
+                                            <option value="" disabled selected>-- Select a Shift --</option>
+                                        </select>
+                                    </div>
+
                                     <div class="guidelines-card">
                                         <h4>Capture Guidelines</h4>
                                         <ul>
@@ -415,73 +415,619 @@
 
                 <!-- TAB: SETTINGS -->
                 <section class="tab-content" id="tab-settings">
-                    <div class="settings-layout">
-                        <div class="card settings-card">
-                            <div class="card-header">
-                                <h3>System Settings</h3>
-                                <p>Adjust system configurations and parameters</p>
+                    <div class="settings-layout-new">
+                        <!-- Sidebar Navigation -->
+                        <div class="settings-sidebar">
+                            <div class="settings-nav-title">
+                                <h3>Settings Center</h3>
                             </div>
-                            <div class="card-body">
-                                <div class="settings-section">
-                                    <h4>Scanning Parameters</h4>
-                                    <div class="form-group setting-row">
-                                        <div class="setting-desc">
-                                            <strong>Attendance Cooldown (Minutes)</strong>
-                                            <span>Time to wait before allowing the same person to log attendance again.</span>
-                                        </div>
-                                        <input type="number" id="setting-cooldown" min="1" max="120" value="5" class="number-input">
+                            <div class="settings-nav-list">
+                                <button class="settings-nav-item active" data-settings-tab="general">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                    <div class="settings-nav-text">
+                                        <strong>General</strong>
+                                        <span>Timing & Cooldowns</span>
                                     </div>
-                                    <div class="form-group setting-row">
-                                        <div class="setting-desc">
-                                            <strong>Shift Start Time</strong>
-                                            <span>The official start time of the daily shift (HH:MM).</span>
-                                        </div>
-                                        <input type="time" id="setting-shift-start" value="09:00" class="number-input" style="width: 120px;">
+                                </button>
+                                <button class="settings-nav-item" data-settings-tab="biometrics">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                    <div class="settings-nav-text">
+                                        <strong>Biometrics</strong>
+                                        <span>Face Recognition Engine</span>
                                     </div>
-                                    <div class="form-group setting-row">
-                                        <div class="setting-desc">
-                                            <strong>Grace Period (Minutes)</strong>
-                                            <span>Allowed late margin before check-ins are logged as Late.</span>
-                                        </div>
-                                        <input type="number" id="setting-grace-period" min="0" max="180" value="15" class="number-input">
+                                </button>
+                                <button class="settings-nav-item" data-settings-tab="database">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path></svg>
+                                    <div class="settings-nav-text">
+                                        <strong>Database</strong>
+                                        <span>Backup & Maintenance</span>
                                     </div>
-                                    <div class="form-group setting-row">
-                                        <div class="setting-desc">
-                                            <strong>Sound Feedback</strong>
-                                            <span>Play audio alerts upon successful scans and error states.</span>
+                                </button>
+                                <button class="settings-nav-item" data-settings-tab="diagnostics">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                    <div class="settings-nav-text">
+                                        <strong>Diagnostics</strong>
+                                        <span>Model Engine Loading & Stats</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Content Panels -->
+                        <div class="settings-content-wrapper">
+                            <form id="settings-form" onsubmit="return false;">
+                                <!-- Panel: General -->
+                                <div class="settings-panel active" id="settings-panel-general">
+                                    <div class="panel-header-desc">
+                                        <h3>General Settings</h3>
+                                        <p>Adjust core shift timing and check-in parameters</p>
+                                    </div>
+                                    
+                                    <div class="settings-card-new">
+                                        <div class="settings-form-row flex-column" style="border-bottom: 1px solid var(--border-color); padding-bottom: 24px; align-items: stretch; gap: 14px;">
+                                            <div class="settings-row-info full-width">
+                                                <strong>Daily Work Shifts</strong>
+                                                <span>Configure shift timings and names. Attendance check-ins automatically match the closest shift.</span>
+                                            </div>
+                                            <div class="shifts-list-wrapper" style="width: 100%;">
+                                                <div id="shifts-list-container" class="shifts-list-container">
+                                                    <!-- Populate dynamically -->
+                                                </div>
+                                            </div>
+                                            <div class="add-shift-form" style="display: flex; gap: 10px; align-items: center; width: 100%; margin-top: 6px;">
+                                                <input type="text" id="new-shift-name" placeholder="e.g., Morning Shift" class="premium-text-input-new" style="flex: 1; padding: 10px 14px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: var(--bg-input); color: var(--text-main); font-size: 0.9rem;">
+                                                <input type="text" id="new-shift-time" class="premium-text-input-new" readonly value="09:00" style="width: 100px; text-align: center; cursor: pointer; padding: 10px 14px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: var(--bg-input); color: var(--text-main); font-size: 0.9rem;">
+                                                <button class="btn btn-primary" id="btn-add-shift" style="padding: 10px 18px; white-space: nowrap;">Add Shift</button>
+                                            </div>
                                         </div>
-                                        <label class="switch">
-                                            <input type="checkbox" id="setting-sound" checked>
-                                            <span class="slider-round"></span>
-                                        </label>
+                                        
+                                        <div class="settings-form-row">
+                                            <div class="settings-row-info">
+                                                <strong>Grace Period</strong>
+                                                <span>Allowed margin (in minutes) before check-ins are logged as "Late".</span>
+                                            </div>
+                                            <div class="settings-row-control">
+                                                <div class="input-spinner-group">
+                                                    <input type="number" id="setting-grace-period" min="0" max="180" value="15" class="premium-number-input">
+                                                    <span class="input-unit-label">mins</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="settings-form-row">
+                                            <div class="settings-row-info">
+                                                <strong>Attendance Cooldown</strong>
+                                                <span>Prevent duplicate scans by specifying cooldown time (in minutes) for members.</span>
+                                            </div>
+                                            <div class="settings-row-control">
+                                                <div class="input-spinner-group">
+                                                    <input type="number" id="setting-cooldown" min="1" max="120" value="5" class="premium-number-input">
+                                                    <span class="input-unit-label">mins</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="settings-form-row">
+                                            <div class="settings-row-info">
+                                                <strong>Audio Feedback Alerts</strong>
+                                                <span>Play sound feedback for successful checks or face recognition error logs.</span>
+                                            </div>
+                                            <div class="settings-row-control">
+                                                <label class="switch">
+                                                    <input type="checkbox" id="setting-sound" checked>
+                                                    <span class="slider-round"></span>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="settings-section">
-                                    <h4>Developer Settings</h4>
-                                    <div class="form-group setting-row">
-                                        <div class="setting-desc">
-                                            <strong>Show Face Landmarks</strong>
-                                            <span>Renders face landmarks (eyes, nose, mouth skeleton) on the scan viewport.</span>
-                                        </div>
-                                        <label class="switch">
-                                            <input type="checkbox" id="setting-landmarks">
-                                            <span class="slider-round"></span>
-                                        </label>
+                                <!-- Panel: Biometrics -->
+                                <div class="settings-panel" id="settings-panel-biometrics">
+                                    <div class="panel-header-desc">
+                                        <h3>Biometric Engine</h3>
+                                        <p>Calibrate threshold metrics and select detection neural networks</p>
                                     </div>
-                                    <div class="form-group setting-row">
-                                        <div class="setting-desc">
-                                            <strong>Export / Import Profiles</strong>
-                                            <span>Download enrolled face database as JSON or load a previously saved database.</span>
+
+                                    <div class="settings-card-new">
+                                        <div class="settings-form-row flex-column">
+                                            <div class="settings-row-info full-width">
+                                                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                                    <strong>Confidence Match Threshold</strong>
+                                                    <span class="range-badge" id="settings-threshold-val">0.50</span>
+                                                </div>
+                                                <span style="margin-top: 6px; display: block;">Lower values require a stricter/closer match to identify faces and avoid false positives.</span>
+                                            </div>
+                                            <div class="settings-row-control full-width" style="margin-top: 15px;">
+                                                <div class="premium-range-container">
+                                                    <span class="range-limit">0.30</span>
+                                                    <input type="range" min="0.3" max="0.7" step="0.01" value="0.50" class="premium-slider" id="settings-threshold-slider">
+                                                    <span class="range-limit">0.70</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="setting-buttons">
-                                            <button class="btn btn-secondary btn-sm" id="btn-export-profiles">Export DB</button>
-                                            <button class="btn btn-secondary btn-sm" id="btn-import-profiles-trigger">Import DB</button>
+
+                                        <div class="settings-form-row flex-column">
+                                            <div class="settings-row-info full-width" style="margin-bottom: 12px;">
+                                                <strong>Active Detection Model</strong>
+                                                <span>Select the underlying face detection neural network model to balance speed and accuracy.</span>
+                                            </div>
+                                            <div class="settings-row-control full-width">
+                                                <div class="model-select-group-new">
+                                                    <label class="model-option-new">
+                                                        <input type="radio" name="settings-detection-model" value="ssd" checked>
+                                                        <div class="model-option-card-new">
+                                                            <div class="model-card-header">
+                                                                <span class="model-badge high">Accurate</span>
+                                                                <strong>SSD MobileNet</strong>
+                                                            </div>
+                                                            <span>Best for stable environments with multiple faces. Higher precision.</span>
+                                                        </div>
+                                                    </label>
+                                                    <label class="model-option-new">
+                                                        <input type="radio" name="settings-detection-model" value="tiny">
+                                                        <div class="model-option-card-new">
+                                                            <div class="model-card-header">
+                                                                <span class="model-badge fast">Fast</span>
+                                                                <strong>Tiny Face Detector</strong>
+                                                            </div>
+                                                            <span>Optimized for low-spec devices. Real-time speed, slightly lower accuracy.</span>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="settings-form-row">
+                                            <div class="settings-row-info">
+                                                <strong>Show Face Landmarks Outline</strong>
+                                                <span>Render facial landmarks overlay (eyes, brows, nose, mouth skeleton) on active cameras.</span>
+                                            </div>
+                                            <div class="settings-row-control">
+                                                <label class="switch">
+                                                    <input type="checkbox" id="setting-landmarks">
+                                                    <span class="slider-round"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Panel: Database -->
+                                <div class="settings-panel" id="settings-panel-database">
+                                    <div class="panel-header-desc">
+                                        <h3>Database Management</h3>
+                                        <p>Perform backup download, restore, or wipe data operations</p>
+                                    </div>
+
+                                    <div class="db-actions-grid">
+                                        <!-- Card: Export -->
+                                        <div class="db-card export">
+                                            <div class="db-card-icon blue">
+                                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                            </div>
+                                            <h4>Backup Database</h4>
+                                            <p>Download enrolled members and biographical face descriptors as a JSON file backup.</p>
+                                            <button class="btn btn-secondary w-100" id="btn-export-profiles">
+                                                <span>Export Database</span>
+                                            </button>
+                                        </div>
+
+                                        <!-- Card: Import -->
+                                        <div class="db-card import">
+                                            <div class="db-card-icon purple">
+                                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                            </div>
+                                            <h4>Restore Backup</h4>
+                                            <p>Upload a previously exported database JSON file to populate enrolled members instantly.</p>
+                                            <button class="btn btn-secondary w-100" id="btn-import-profiles-trigger">
+                                                <span>Import Database</span>
+                                            </button>
                                             <input type="file" id="input-import-profiles" accept=".json" style="display: none;">
+                                        </div>
+
+                                        <!-- Card: Reset (Wipe) -->
+                                        <div class="db-card reset full-width-card">
+                                            <div class="reset-card-content">
+                                                <div class="db-card-icon red">
+                                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                                </div>
+                                                <div class="reset-desc">
+                                                    <h4>Danger Zone: Reset Application</h4>
+                                                    <p>Wipes all enrolled members, biographical descriptors, and scan log history. This operation is permanent and cannot be undone.</p>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-danger" id="settings-btn-reset-db">
+                                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                                <span>Wipe Database</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Panel: Diagnostics -->
+                                <div class="settings-panel" id="settings-panel-diagnostics">
+                                    <div class="panel-header-desc">
+                                        <h3>System Diagnostics</h3>
+                                        <p>Real-time neural network loading and local state info</p>
+                                    </div>
+
+                                    <div class="diagnostics-grid">
+                                        <!-- Card: Model Loader Statuses -->
+                                        <div class="diag-card model-status-card">
+                                            <h4>Model Initializer Engine</h4>
+                                            <div class="model-status-list">
+                                                <div class="model-status-item">
+                                                    <span>SSD MobileNet Detector</span>
+                                                    <span class="status-badge-new" id="diag-model-ssd">Checking...</span>
+                                                </div>
+                                                <div class="model-status-item">
+                                                    <span>Tiny Face Detector</span>
+                                                    <span class="status-badge-new" id="diag-model-tiny">Checking...</span>
+                                                </div>
+                                                <div class="model-status-item">
+                                                    <span>Face Landmark Predictor</span>
+                                                    <span class="status-badge-new" id="diag-model-landmark">Checking...</span>
+                                                </div>
+                                                <div class="model-status-item">
+                                                    <span>Face Recognition Embedder</span>
+                                                    <span class="status-badge-new" id="diag-model-recognition">Checking...</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Card: Database Metrics -->
+                                        <div class="diag-card metrics-card">
+                                            <h4>Database Metrics</h4>
+                                            <div class="metric-stats">
+                                                <div class="metric-stat-item">
+                                                    <span class="metric-num" id="diag-metric-count">0</span>
+                                                    <span class="metric-label">Enrolled Members</span>
+                                                </div>
+                                                <div class="metric-stat-item">
+                                                    <span class="metric-num" id="diag-metric-size">0.0 KB</span>
+                                                    <span class="metric-label">LocalStorage Size</span>
+                                                </div>
+                                            </div>
+                                            <div class="metric-bar-container">
+                                                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; color: var(--text-muted);">
+                                                    <span>Browser Storage Budget</span>
+                                                    <span id="diag-metric-percent">0% used</span>
+                                                </div>
+                                                <div class="metric-progress-bar">
+                                                    <div class="metric-progress-fill" id="diag-metric-fill" style="width: 0%;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Card: About / System Metadata -->
+                                        <div class="diag-card system-info-card full-width-card">
+                                            <h4>About ParaScan AI</h4>
+                                            <div class="info-table">
+                                                <div class="info-row">
+                                                    <span>Software Version</span>
+                                                    <strong>v2.1.0-Release</strong>
+                                                </div>
+                                                <div class="info-row">
+                                                    <span>Core Engine Library</span>
+                                                    <strong>Face-API.js ( Vladmandic fork )</strong>
+                                                </div>
+                                                <div class="info-row">
+                                                    <span>Active Browser Platform</span>
+                                                    <strong id="diag-info-platform">Unknown Browser</strong>
+                                                </div>
+                                                <div class="info-row">
+                                                    <span>LocalStorage Keys</span>
+                                                    <strong>parascan_users, parascan_settings</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB: HALL TICKETS -->
+                <section class="tab-content" id="tab-hall-tickets">
+                    <div class="split-layout">
+                        <!-- Left: File Upload & Crop Preview -->
+                        <div class="split-left">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3>Upload Hall Ticket</h3>
+                                    <p>Select PDF document or image for automatic registration</p>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Dropzone -->
+                                    <div class="file-dropzone" id="ticket-dropzone">
+                                        <input type="file" id="ticket-file-input" accept="application/pdf,image/*" style="display: none;">
+                                        <svg viewBox="0 0 24 24" width="40" height="40" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="upload-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                        <span class="dropzone-text">Drag & drop hall ticket (PDF/Image) here or <a href="#" id="browse-ticket-link">browse</a></span>
+                                    </div>
+                                    
+                                    <!-- OCR & Face Detection Progress -->
+                                    <div class="progress-container hidden" id="ticket-progress-container">
+                                        <div class="progress-step-item" id="step-ocr">
+                                            <div class="step-header">
+                                                <span>Step 1: Text OCR Extraction</span>
+                                                <strong id="ocr-percentage">0%</strong>
+                                            </div>
+                                            <div class="progress-bar-bg">
+                                                <div class="progress-bar-fill" id="ocr-progress-bar" style="width: 0%;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="progress-step-item" id="step-face">
+                                            <div class="step-header">
+                                                <span>Step 2: Student Photo Detection & Embedding</span>
+                                                <strong id="face-status">Pending...</strong>
+                                            </div>
+                                            <div class="progress-bar-bg">
+                                                <div class="progress-bar-fill animate-pulse" id="face-progress-bar" style="width: 0%;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Face Preview Box -->
+                                    <div class="face-preview-card hidden" id="face-preview-card">
+                                        <div class="face-preview-header">Student Photograph</div>
+                                        <div class="face-preview-body">
+                                            <div class="crop-frame">
+                                                <img id="extracted-face-img" alt="Extracted Student Face">
+                                            </div>
+                                            <div class="crop-status-success" id="crop-status-text">Face extracted successfully!</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Face Failure Box -->
+                                    <div class="alert alert-danger hidden" id="face-failure-alert">
+                                        Face could not be detected from the hall ticket. Please upload a passport photograph manually.
+                                        <div class="manual-upload-photo" style="margin-top: 10px;">
+                                            <input type="file" id="manual-photo-input" accept="image/*" style="display: none;">
+                                            <button class="btn btn-primary btn-sm" id="btn-browse-manual-photo">Upload Passport Photo</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- Right: Review Form Details -->
+                        <div class="split-right">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3>Verify Details</h3>
+                                    <p>Review and edit student information extracted from OCR</p>
+                                </div>
+                                <div class="card-body">
+                                    <form id="student-verify-form" onsubmit="return false;">
+                                        <div class="form-grid-2">
+                                            <div class="form-group">
+                                                <label for="student-name">Student Name *</label>
+                                                <input type="text" id="student-name" required placeholder="Full Name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="student-roll">Roll Number *</label>
+                                                <input type="text" id="student-roll" required placeholder="e.g. 2021-CS-56">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="student-hall-no">Hall Ticket Number *</label>
+                                                <input type="text" id="student-hall-no" required placeholder="e.g. HT-10029">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="student-reg-no">Registration Number</label>
+                                                <input type="text" id="student-reg-no" placeholder="e.g. REG-90288">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="student-course">Course</label>
+                                                <input type="text" id="student-course" placeholder="e.g. B.Tech">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="student-branch">Branch</label>
+                                                <input type="text" id="student-branch" placeholder="e.g. Computer Science">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="student-semester">Semester</label>
+                                                <input type="text" id="student-semester" placeholder="e.g. 6th Sem">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="student-subjects">Subject Codes (comma separated)</label>
+                                                <input type="text" id="student-subjects" placeholder="e.g. CS-601, CS-602">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="student-exam-date">Exam Date</label>
+                                                <input type="text" id="student-exam-date" placeholder="e.g. 05/07/2026">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="student-exam-time">Exam Time</label>
+                                                <input type="text" id="student-exam-time" placeholder="e.g. 10:00 AM">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="student-exam-center">Exam Center</label>
+                                                <input type="text" id="student-exam-center" placeholder="e.g. Room 102">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="student-college">College Name</label>
+                                                <input type="text" id="student-college" placeholder="College Name">
+                                            </div>
+                                        </div>
+                                        
+                                        <button class="btn btn-primary" id="btn-register-student" disabled style="width: 100%; margin-top: 20px; padding: 12px;">Register Student</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB: REGISTERED STUDENTS -->
+                <section class="tab-content" id="tab-registered-students">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="header-titles">
+                                <h3>Registered Students</h3>
+                                <p>Manage students registered for exams via Hall Tickets</p>
+                            </div>
+                            <div class="header-actions">
+                                <select class="search-input" id="student-course-filter" style="width: 150px; margin-right: 8px;">
+                                    <option value="">All Courses</option>
+                                </select>
+                                <select class="search-input" id="student-sem-filter" style="width: 130px; margin-right: 8px;">
+                                    <option value="">All Semesters</option>
+                                </select>
+                                <input type="text" placeholder="Search students..." class="search-input" id="student-search">
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Photo</th>
+                                        <th>Student Name</th>
+                                        <th>Roll Number</th>
+                                        <th>Hall Ticket</th>
+                                        <th>Course / Sem</th>
+                                        <th>Reg Status</th>
+                                        <th>Face Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="student-list-tbody">
+                                    <!-- Populated dynamically via API -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB: EXAM SCANNER -->
+                <section class="tab-content" id="tab-exam-scanner">
+                    <div class="split-layout">
+                        <!-- Left: Live Biometric Camera Scanner -->
+                        <div class="split-left">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3>Exam Day Scanner</h3>
+                                    <p>Scan student face to verify credentials and log attendance</p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="scanner-container">
+                                        <div class="webcam-viewport">
+                                            <div class="camera-placeholder" id="exam-scanner-placeholder">
+                                                <svg viewBox="0 0 24 24" width="64" height="64" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="placeholder-icon animate-pulse"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                                                <p>Biometric Camera Ready</p>
+                                                <button class="btn btn-success" id="btn-exam-scanner-on-placeholder">
+                                                    Activate Camera
+                                                </button>
+                                            </div>
+                                            <video id="exam-scanner-video" autoplay playsinline muted class="video-feed hidden"></video>
+                                            <canvas id="exam-scanner-overlay" class="overlay-canvas hidden"></canvas>
+                                            
+                                            <!-- Floating scanner HUD elements -->
+                                            <div class="scanner-hud hidden" id="exam-scanner-hud">
+                                                <div class="hud-scanning-line"></div>
+                                                <div class="hud-corners">
+                                                    <div class="corner top-left"></div>
+                                                    <div class="corner top-right"></div>
+                                                    <div class="corner bottom-left"></div>
+                                                    <div class="corner bottom-right"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="status-banner" id="exam-scanner-status-banner">Waiting for camera...</div>
+                                    
+                                    <div class="scanner-control-bar">
+                                        <div class="camera-direction">
+                                            <button class="btn btn-secondary" id="btn-exam-scanner-flip">Flip Camera</button>
+                                        </div>
+                                        <div class="camera-triggers">
+                                            <button class="btn btn-secondary" id="btn-exam-scanner-off" disabled>Turn Off</button>
+                                            <button class="btn btn-primary" id="btn-exam-scanner-on">Activate Camera</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: Live Recognized HUD Details -->
+                        <div class="split-right">
+                            <div class="card" style="margin-bottom: 20px;">
+                                <div class="card-header">
+                                    <h3>Student Verification</h3>
+                                    <p>Identified student biometric credentials</p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="student-hud-card" id="student-hud-card">
+                                        <div class="hud-profile-info" id="hud-profile-info">
+                                            <div class="hud-avatar">
+                                                <svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                            </div>
+                                            <div class="hud-meta">
+                                                <h4>Ready for Verification</h4>
+                                                <span>Align face in scanner frame</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3>Real-Time Exam Check-ins</h3>
+                                    <p>Instant Socket.IO log of authenticated students</p>
+                                </div>
+                                <div class="card-body" style="padding: 0;">
+                                    <div class="checkin-feed-container" id="exam-checkin-feed">
+                                        <!-- Live checkins will be appended here -->
+                                        <div class="empty-list-message" id="empty-checkin-msg">No exam attendance logged yet.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB: EXAM REPORTS -->
+                <section class="tab-content" id="tab-exam-reports">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="header-titles">
+                                <h3>Exam Attendance Reports</h3>
+                                <p>View and export historical student attendance records</p>
+                            </div>
+                            <div class="header-actions">
+                                <select class="search-input" id="report-course-filter" style="width: 140px; margin-right: 8px;">
+                                    <option value="">All Courses</option>
+                                </select>
+                                <select class="search-input" id="report-sem-filter" style="width: 120px; margin-right: 8px;">
+                                    <option value="">All Semesters</option>
+                                </select>
+                                <input type="text" placeholder="Search report logs..." class="search-input" id="report-search" style="margin-right: 8px;">
+                                <button class="btn btn-primary" id="btn-export-reports">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    <span>Export Report</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Student Photo</th>
+                                        <th>Roll Number</th>
+                                        <th>Student Name</th>
+                                        <th>Course / Sem</th>
+                                        <th>Exam Date</th>
+                                        <th>Subject</th>
+                                        <th>Check-In Time</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="report-list-tbody">
+                                    <!-- Populated dynamically via API -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </section>
@@ -498,6 +1044,112 @@
         <div class="toast-body">
             <h4 id="toast-title">Scan Logged</h4>
             <p id="toast-message">User has been checked in.</p>
+        </div>
+    </div>
+
+    <!-- Edit Student Modal Popup -->
+    <div class="modal hidden" id="edit-student-modal">
+        <div class="modal-overlay" id="edit-student-modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Student Details</h3>
+                <button class="btn-close-modal" id="btn-close-edit-student-modal">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-student-form" onsubmit="return false;">
+                    <input type="hidden" id="edit-student-id">
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="edit-student-name">Student Name *</label>
+                            <input type="text" id="edit-student-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-student-roll">Roll Number *</label>
+                            <input type="text" id="edit-student-roll" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-student-hall-no">Hall Ticket *</label>
+                            <input type="text" id="edit-student-hall-no" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-student-reg-no">Registration Number</label>
+                            <input type="text" id="edit-student-reg-no">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-student-course">Course</label>
+                            <input type="text" id="edit-student-course">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-student-branch">Branch</label>
+                            <input type="text" id="edit-student-branch">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-student-semester">Semester</label>
+                            <input type="text" id="edit-student-semester">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-student-subjects">Subjects (comma-separated)</label>
+                            <input type="text" id="edit-student-subjects">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-student-exam-date">Exam Date</label>
+                            <input type="text" id="edit-student-exam-date">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-student-exam-time">Exam Time</label>
+                            <input type="text" id="edit-student-exam-time">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-student-exam-center">Exam Center</label>
+                            <input type="text" id="edit-student-exam-center">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-student-college">College Name</label>
+                            <input type="text" id="edit-student-college">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" id="btn-save-edit-student" style="width: 100%; margin-top: 18px; padding: 10px;">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Clock Picker Modal -->
+    <div class="clock-picker-modal hidden" id="clock-picker-modal">
+        <div class="clock-picker-overlay" id="clock-picker-overlay"></div>
+        <div class="clock-picker-container">
+            <div class="clock-picker-header">
+                <div class="clock-picker-display">
+                    <span class="clock-time-val active" id="clock-display-hour">09</span>
+                    <span class="clock-time-separator">:</span>
+                    <span class="clock-time-val" id="clock-display-minute">00</span>
+                    <div class="clock-ampm-toggle">
+                        <button class="ampm-btn active" id="clock-ampm-am">AM</button>
+                        <button class="ampm-btn" id="clock-ampm-pm">PM</button>
+                    </div>
+                </div>
+                <div class="clock-mode-label" id="clock-mode-label">Select Hour</div>
+            </div>
+            
+            <div class="clock-picker-body">
+                <div class="clock-face" id="clock-face">
+                    <div class="clock-center-dot"></div>
+                    <div class="clock-hand" id="clock-hand">
+                        <div class="clock-hand-line"></div>
+                        <div class="clock-hand-pin"></div>
+                    </div>
+                    <div class="clock-numbers" id="clock-numbers">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="clock-picker-footer">
+                <button class="btn btn-secondary" id="btn-clock-cancel" style="padding: 6px 12px; font-size: 0.85rem; border: none; background: transparent; cursor: pointer;">Cancel</button>
+                <button class="btn btn-primary" id="btn-clock-ok" style="padding: 6px 16px; font-size: 0.85rem; border-radius: 4px; cursor: pointer;">OK</button>
+            </div>
         </div>
     </div>
 
